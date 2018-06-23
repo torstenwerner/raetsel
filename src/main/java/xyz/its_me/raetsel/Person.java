@@ -74,6 +74,4 @@ public interface Person {
                 merge(getStatus()) +
                 merge(getField());
     }
-
-    int mergeRecursive();
 }

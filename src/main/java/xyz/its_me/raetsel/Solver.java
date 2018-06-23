@@ -12,7 +12,7 @@ import static xyz.its_me.raetsel.Language.*;
 import static xyz.its_me.raetsel.Sector.*;
 import static xyz.its_me.raetsel.Status.*;
 import static xyz.its_me.raetsel.Tool.*;
-import static xyz.its_me.raetsel.Utils.nullSafeMergeRecursive;
+import static xyz.its_me.raetsel.Utils.mergeRelations;
 
 @Component
 public class Solver implements ApplicationRunner {
@@ -40,6 +40,7 @@ public class Solver implements ApplicationRunner {
     }
 
     private int merge() {
-        return nullSafeMergeRecursive(Tool.values());
+        return mergeRelations(Tool.values(), Language.values(), Sector.values(), Status.values(), Field.values());
+
     }
 }
