@@ -1,7 +1,7 @@
 package xyz.its_me.raetsel;
 
 import java.util.function.BiConsumer;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public interface Person {
     Person getTool();
@@ -39,9 +39,9 @@ public interface Person {
                 nullSafeName(getSector()), nullSafeName(getStatus()), nullSafeName(getField()));
     }
 
-    default <T extends Person> int mergeByAccessor(Person otherPerson, Function<Person, T> getter, BiConsumer<Person, T> setter) {
-        final T thisValue = getter.apply(this);
-        final T otherValue = getter.apply(otherPerson);
+    default int mergeByAccessor(Person otherPerson, UnaryOperator<Person> getter, BiConsumer<Person, Person> setter) {
+        final Person thisValue = getter.apply(this);
+        final Person otherValue = getter.apply(otherPerson);
         if (thisValue == null && otherValue != null) {
             setter.accept(this, otherValue);
             return 1;
