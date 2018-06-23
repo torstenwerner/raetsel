@@ -2,8 +2,6 @@ package xyz.its_me.raetsel;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public interface Person {
@@ -34,15 +32,15 @@ public interface Person {
                 .collect(Collectors.joining());
     }
 
-    default int mergeByAccessor(Person otherPerson, UnaryOperator<Person> getter, BiConsumer<Person, Person> setter) {
-        final Person thisValue = getter.apply(this);
-        final Person otherValue = getter.apply(otherPerson);
+    default int mergeByCategory(Category category, Person otherPerson) {
+        final Person thisValue = this.get(category);
+        final Person otherValue = otherPerson.get(category);
         if (thisValue == null && otherValue != null) {
-            setter.accept(this, otherValue);
+            this.set(otherValue);
             return 1;
         }
         if (thisValue != null & otherValue == null) {
-            setter.accept(otherPerson, thisValue);
+            otherPerson.set(thisValue);
             return 1;
         }
         if (thisValue != otherValue) {
@@ -56,7 +54,7 @@ public interface Person {
             return 0;
         }
         return Arrays.stream(Category.values())
-                .mapToInt(category -> mergeByAccessor(otherPerson, (person) -> person.get(category), Person::set))
+                .mapToInt(category -> mergeByCategory(category, otherPerson))
                 .sum();
     }
 
