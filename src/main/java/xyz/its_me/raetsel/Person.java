@@ -21,5 +21,7 @@ public interface Person {
 
     void setField(Field field);
 
-    long count();
+    default long countNonNullRelations() {
+        return Utils.countNonNull(getTool(), getLanguage(), getSector(), getStatus(), getField()) - 1;
+    }
 }

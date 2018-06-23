@@ -57,10 +57,6 @@ public enum Language implements Person {
         this.field = field;
     }
 
-    public long count() {
-        return Utils.countNonNull(tool, sector, status, field);
-    }
-
     public String toString() {
         return format("%-10s%-10s%-10s%-10s%-10s",
                 nullSafeName(tool), name(), nullSafeName(sector), nullSafeName(status), nullSafeName(field));

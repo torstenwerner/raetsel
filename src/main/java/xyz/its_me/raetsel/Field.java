@@ -57,10 +57,6 @@ public enum Field implements Person {
         throw new AssertionError("cannot set this");
     }
 
-    public long count() {
-        return Utils.countNonNull(tool, language, sector, status);
-    }
-
     public String toString() {
         return format("%-10s%-10s%-10s%-10s%-10s",
                 nullSafeName(tool), nullSafeName(language), nullSafeName(sector), nullSafeName(status), name());

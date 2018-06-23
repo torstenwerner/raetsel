@@ -65,11 +65,6 @@ public enum Tool implements Person {
         this.field = field;
     }
 
-    @Override
-    public long count() {
-        return Utils.countNonNull(language, sector, status, field);
-    }
-
     public String toString() {
         return format("%-10s%-10s%-10s%-10s%-10s",
                 name(), nullSafeName(language), nullSafeName(sector), nullSafeName(status), nullSafeName(field));

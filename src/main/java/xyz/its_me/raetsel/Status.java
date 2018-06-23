@@ -57,10 +57,6 @@ public enum Status implements Person {
         this.field = field;
     }
 
-    public long count() {
-        return Utils.countNonNull(tool, language, sector, field);
-    }
-
     public String toString() {
         return format("%-10s%-10s%-10s%-10s%-10s",
                 nullSafeName(tool), nullSafeName(language), nullSafeName(sector), name(), nullSafeName(field));

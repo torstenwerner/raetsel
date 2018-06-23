@@ -11,7 +11,7 @@ public class Utils {
     }
 
     public static long countForArray(Person[] array) {
-        return Arrays.stream(array).mapToLong(Person::count).sum();
+        return Arrays.stream(array).mapToLong(Person::countNonNullRelations).sum();
     }
 
     public static long countRelations() {

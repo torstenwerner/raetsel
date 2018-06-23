@@ -57,10 +57,6 @@ public enum Sector implements Person {
         this.field = field;
     }
 
-    public long count() {
-        return Utils.countNonNull(tool, language, status, field);
-    }
-
     public String toString() {
         return format("%-10s%-10s%-10s%-10s%-10s",
                 nullSafeName(tool), nullSafeName(language), name(), nullSafeName(status), nullSafeName(field));
