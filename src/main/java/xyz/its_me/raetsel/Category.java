@@ -37,33 +37,37 @@ public enum Category {
 
     abstract List<Person> persons();
 
-    static final Person ppt = new DefaultPerson(Category.Tool, "ppt");
-    static final Person oo = new DefaultPerson(Category.Tool, "oo");
-    static final Person kopf = new DefaultPerson(Category.Tool, "kopf");
-    static final Person aris = new DefaultPerson(Category.Tool, "aris");
-    static final Person word = new DefaultPerson(Category.Tool, "word");
+    private Person newPerson(String name) {
+        return new DefaultPerson(this, name);
+    }
 
-    final static Person abap = new DefaultPerson(Category.Language, "abap");
-    final static Person cobol = new DefaultPerson(Category.Language, "cobol");
-    final static Person algol = new DefaultPerson(Category.Language, "algol");
-    final static Person java = new DefaultPerson(Category.Language, "java");
-    final static Person basic = new DefaultPerson(Category.Language, "basic");
+    static final Person ppt = Tool.newPerson("ppt");
+    static final Person oo = Tool.newPerson("oo");
+    static final Person kopf = Tool.newPerson("kopf");
+    static final Person aris = Tool.newPerson("aris");
+    static final Person word = Tool.newPerson("word");
 
-    final static Person utility = new DefaultPerson(Category.Sector, "utility");
-    final static Person telco = new DefaultPerson(Category.Sector, "telco");
-    final static Person public_ = new DefaultPerson(Category.Sector, "public");
-    final static Person chemistry = new DefaultPerson(Category.Sector, "chemistry");
-    final static Person auto = new DefaultPerson(Category.Sector, "auto");
+    final static Person abap = Language.newPerson("abap");
+    final static Person cobol = Language.newPerson("cobol");
+    final static Person algol = Language.newPerson("algol");
+    final static Person java = Language.newPerson("java");
+    final static Person basic = Language.newPerson("basic");
 
-    final static Person ass = new DefaultPerson(Category.Status, "ass");
-    final static Person junior = new DefaultPerson(Category.Status, "junior");
-    final static Person senior = new DefaultPerson(Category.Status, "senior");
-    final static Person chief = new DefaultPerson(Category.Status, "chief");
-    final static Person partner = new DefaultPerson(Category.Status, "partner");
+    final static Person utility = Sector.newPerson("utility");
+    final static Person telco = Sector.newPerson("telco");
+    final static Person public_ = Sector.newPerson("public");
+    final static Person chemistry = Sector.newPerson("chemistry");
+    final static Person auto = Sector.newPerson("auto");
 
-    final static Person vw = new DefaultPerson(Category.Field, "vw");
-    final static Person phy = new DefaultPerson(Category.Field, "phy");
-    final static Person bw = new DefaultPerson(Category.Field, "bw");
-    final static Person inf = new DefaultPerson(Category.Field, "inf");
-    final static Person math = new DefaultPerson(Category.Field, "math");
+    final static Person ass = Status.newPerson("ass");
+    final static Person junior = Status.newPerson("junior");
+    final static Person senior = Status.newPerson("senior");
+    final static Person chief = Status.newPerson("chief");
+    final static Person partner = Status.newPerson("partner");
+
+    final static Person vw = Field.newPerson("vw");
+    final static Person phy = Field.newPerson("phy");
+    final static Person bw = Field.newPerson("bw");
+    final static Person inf = Field.newPerson("inf");
+    final static Person math = Field.newPerson("math");
 }
