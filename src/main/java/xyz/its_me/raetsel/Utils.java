@@ -22,10 +22,6 @@ public class Utils {
                 countForArray(Field.values());
     }
 
-    public static String nullSafeName(Enum<?> enumObject) {
-        return enumObject != null ? enumObject.name() : "";
-    }
-
     private static void printRelations(Person[] array) {
         Arrays.stream(array).map(Person::format).forEach(System.out::println);
         System.out.println();

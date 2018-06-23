@@ -1,7 +1,5 @@
 package xyz.its_me.raetsel;
 
-import static xyz.its_me.raetsel.Utils.nullSafeName;
-
 public interface Person {
     Tool getTool();
 
@@ -22,6 +20,12 @@ public interface Person {
     Field getField();
 
     void setField(Field field);
+
+    String name();
+
+    static String nullSafeName(Person person) {
+        return person != null ? person.name() : "";
+    }
 
     default long countNonNullRelations() {
         return Utils.countNonNull(getTool(), getLanguage(), getSector(), getStatus(), getField()) - 1;
