@@ -4,13 +4,10 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import static xyz.its_me.raetsel.Field.math;
-import static xyz.its_me.raetsel.Field.vw;
-import static xyz.its_me.raetsel.Language.*;
-import static xyz.its_me.raetsel.Sector.*;
-import static xyz.its_me.raetsel.Status.*;
-import static xyz.its_me.raetsel.Tool.*;
-import static xyz.its_me.raetsel.Utils.mergeRelations;
+import java.util.Arrays;
+import java.util.List;
+
+import static xyz.its_me.raetsel.Category.*;
 
 @Component
 public class Solver implements ApplicationRunner {
@@ -36,6 +33,10 @@ public class Solver implements ApplicationRunner {
     }
 
     private int merge() {
-        return mergeRelations(Tool.values(), Language.values(), Sector.values(), Status.values(), Field.values());
+        return Arrays.stream(Category.values())
+                .map(Category::persons)
+                .flatMap(List::stream)
+                .mapToInt(Person::mergeRelations)
+                .sum();
     }
 }

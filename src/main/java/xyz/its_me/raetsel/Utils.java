@@ -9,11 +9,10 @@ class Utils {
     }
 
     private static long countNullRelations() {
-        return countNullForList(Tool.values()) +
-                countNullForList(Language.values()) +
-                countNullForList(Sector.values()) +
-                countNullForList(Status.values()) +
-                countNullForList(Field.values());
+        return Arrays.stream(Category.values())
+                .map(Category::persons)
+                .mapToLong(Utils::countNullForList)
+                .sum();
     }
 
     private static void printRelations(List<Person> personList) {
@@ -22,20 +21,10 @@ class Utils {
     }
 
     static void printRelations() {
-        printRelations(Tool.values());
-        printRelations(Language.values());
-        printRelations(Sector.values());
-        printRelations(Status.values());
-        printRelations(Field.values());
+        Arrays.stream(Category.values())
+                .map(Category::persons)
+                .forEach(Utils::printRelations);
 
         System.out.printf("missing relation count: %d%n%n", Utils.countNullRelations());
-    }
-
-    @SafeVarargs
-    static int mergeRelations(List<Person>... lists) {
-        return Arrays.stream(lists)
-                .flatMap(List::stream)
-                .mapToInt(Person::mergeRelations)
-                .sum();
     }
 }
