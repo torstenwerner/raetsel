@@ -2,6 +2,7 @@ package xyz.its_me.raetsel;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
 abstract public class AbstractPerson implements Person {
     private Map<Category, Person> map = new EnumMap<>(Category.class);
@@ -15,6 +16,11 @@ abstract public class AbstractPerson implements Person {
     }
 
     @Override
+    public Category getCategory() {
+        return category;
+    }
+
+    @Override
     public Person get(Category category) {
         if (this.category == category) {
             return this;
@@ -23,12 +29,14 @@ abstract public class AbstractPerson implements Person {
     }
 
     @Override
-    public void set(Category category, Person person) {
-        if (this.category == category) {
+    public void set(Person person) {
+        Objects.requireNonNull(person, "person must not be null for setter");
+        if (this.category == person.getCategory()) {
             throw new AssertionError("cannot set this");
         }
-        map.put(category, person);
+        map.put(person.getCategory(), person);
     }
+
     @Override
     public String name() {
         return name;

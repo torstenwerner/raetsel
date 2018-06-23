@@ -7,9 +7,11 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public interface Person {
+    Category getCategory();
+
     Person get(Category category);
 
-    void set(Category category, Person person);
+    void set(Person person);
 
     String name();
 
@@ -54,10 +56,7 @@ public interface Person {
             return 0;
         }
         return Arrays.stream(Category.values())
-                .mapToInt(category -> mergeByAccessor(
-                        otherPerson,
-                        (person) -> person.get(category),
-                        (target, source) -> target.set(category, source)))
+                .mapToInt(category -> mergeByAccessor(otherPerson, (person) -> person.get(category), Person::set))
                 .sum();
     }
 
