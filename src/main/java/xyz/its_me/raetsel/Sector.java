@@ -24,7 +24,7 @@ public class Sector extends AbstractPerson {
     }
 
     @Override
-    public void setSector(Sector sector) {
+    public void setSector(Person sector) {
         throw new AssertionError("cannot set this");
     }
 }

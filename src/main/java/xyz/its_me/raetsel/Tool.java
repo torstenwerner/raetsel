@@ -24,7 +24,7 @@ public class Tool extends AbstractPerson {
     }
 
     @Override
-    public void setTool(Tool tool) {
+    public void setTool(Person tool) {
         throw new AssertionError("cannot set this");
     }
 }

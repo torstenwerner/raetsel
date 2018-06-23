@@ -4,25 +4,25 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public interface Person {
-    Tool getTool();
+    Person getTool();
 
-    void setTool(Tool tool);
+    void setTool(Person tool);
 
-    Language getLanguage();
+    Person getLanguage();
 
-    void setLanguage(Language language);
+    void setLanguage(Person language);
 
-    Sector getSector();
+    Person getSector();
 
-    void setSector(Sector sector);
+    void setSector(Person sector);
 
-    Status getStatus();
+    Person getStatus();
 
-    void setStatus(Status status);
+    void setStatus(Person status);
 
-    Field getField();
+    Person getField();
 
-    void setField(Field field);
+    void setField(Person field);
 
     String name();
 

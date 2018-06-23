@@ -24,7 +24,7 @@ public class Status extends AbstractPerson {
     }
 
     @Override
-    public void setStatus(Status status) {
+    public void setStatus(Person status) {
         throw new AssertionError("cannot set this");
     }
 }

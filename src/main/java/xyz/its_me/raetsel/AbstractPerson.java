@@ -1,11 +1,11 @@
 package xyz.its_me.raetsel;
 
 abstract public class AbstractPerson implements Person {
-    private Tool tool;
-    private Language language;
-    private Sector sector;
-    private Status status;
-    private Field field;
+    private Person tool;
+    private Person language;
+    private Person sector;
+    private Person status;
+    private Person field;
 
     private String name;
 
@@ -14,52 +14,52 @@ abstract public class AbstractPerson implements Person {
     }
 
     @Override
-    public Tool getTool() {
+    public Person getTool() {
         return tool;
     }
 
     @Override
-    public void setTool(Tool tool) {
+    public void setTool(Person tool) {
         this.tool = tool;
     }
 
     @Override
-    public Language getLanguage() {
+    public Person getLanguage() {
         return language;
     }
 
     @Override
-    public void setLanguage(Language language) {
+    public void setLanguage(Person language) {
         this.language = language;
     }
 
     @Override
-    public Sector getSector() {
+    public Person getSector() {
         return sector;
     }
 
     @Override
-    public void setSector(Sector sector) {
+    public void setSector(Person sector) {
         this.sector = sector;
     }
 
     @Override
-    public Status getStatus() {
+    public Person getStatus() {
         return status;
     }
 
     @Override
-    public void setStatus(Status status) {
+    public void setStatus(Person status) {
         this.status = status;
     }
 
     @Override
-    public Field getField() {
+    public Person getField() {
         return field;
     }
 
     @Override
-    public void setField(Field field) {
+    public void setField(Person field) {
         this.field = field;
     }
 

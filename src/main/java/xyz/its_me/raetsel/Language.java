@@ -24,7 +24,7 @@ public class Language extends AbstractPerson {
     }
 
     @Override
-    public void setLanguage(Language language) {
+    public void setLanguage(Person language) {
         throw new AssertionError("cannot set this");
     }
 }

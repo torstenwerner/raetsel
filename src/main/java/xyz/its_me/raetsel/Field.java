@@ -24,7 +24,7 @@ public class Field extends AbstractPerson {
     }
 
     @Override
-    public void setField(Field field) {
+    public void setField(Person field) {
         throw new AssertionError("cannot set this");
     }
 }
