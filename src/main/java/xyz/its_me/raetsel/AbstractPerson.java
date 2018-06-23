@@ -1,11 +1,10 @@
 package xyz.its_me.raetsel;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 abstract public class AbstractPerson implements Person {
-    private Person tool;
-    private Person language;
-    private Person sector;
-    private Person status;
-    private Person field;
+    private Map<Category, Person> map = new EnumMap<>(Category.class);
 
     private String name;
 
@@ -15,52 +14,52 @@ abstract public class AbstractPerson implements Person {
 
     @Override
     public Person getTool() {
-        return tool;
+        return map.get(Category.Tool);
     }
 
     @Override
     public void setTool(Person tool) {
-        this.tool = tool;
+        map.put(Category.Tool, tool);
     }
 
     @Override
     public Person getLanguage() {
-        return language;
+        return map.get(Category.Language);
     }
 
     @Override
     public void setLanguage(Person language) {
-        this.language = language;
+        map.put(Category.Language, language);
     }
 
     @Override
     public Person getSector() {
-        return sector;
+        return map.get(Category.Sector);
     }
 
     @Override
     public void setSector(Person sector) {
-        this.sector = sector;
+        map.put(Category.Sector, sector);
     }
 
     @Override
     public Person getStatus() {
-        return status;
+        return map.get(Category.Status);
     }
 
     @Override
     public void setStatus(Person status) {
-        this.status = status;
+        map.put(Category.Status, status);
     }
 
     @Override
     public Person getField() {
-        return field;
+        return map.get(Category.Field);
     }
 
     @Override
     public void setField(Person field) {
-        this.field = field;
+        map.put(Category.Field, field);
     }
 
     @Override
