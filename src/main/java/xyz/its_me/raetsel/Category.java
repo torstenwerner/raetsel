@@ -1,7 +1,10 @@
 package xyz.its_me.raetsel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public enum Category {
     Tool,
@@ -20,6 +23,30 @@ public enum Category {
 
     List<Person> persons() {
         return personList;
+    }
+
+    static Map<Category, List<Person>> toMap() {
+        return toMap(Category::persons);
+    }
+
+    static Map<Category, List<Person>> deepCopy(Map<Category, List<Person>> sourceMap) {
+        return toMap(category -> deepCopy(sourceMap.get(category)));
+    }
+
+    private static Map<Category, List<Person>> toMap(Function<Category, List<Person>> personListSupplier) {
+        return Arrays.stream(values()).collect(Collectors.toMap(
+                Function.identity(),
+                personListSupplier,
+                (category, list) -> {
+                    throw new IllegalStateException(String.format("Duplicate category %s", category));
+                },
+                () -> new EnumMap<>(Category.class)));
+    }
+
+    private static List<Person> deepCopy(List<Person> sourceList) {
+        return sourceList.stream()
+                .map(DefaultPerson::new)
+                .collect(toList());
     }
 
     static final Person ppt = Tool.newPerson("ppt");

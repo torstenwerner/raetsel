@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static xyz.its_me.raetsel.Category.*;
 
@@ -17,6 +18,11 @@ public class Solver implements ApplicationRunner {
         do {
             Utils.printRelations();
         } while (merge() > 0);
+
+        final Map<Category, List<Person>> startMap = Category.toMap();
+        System.out.println(startMap);
+        final Map<Category, List<Person>> nextMap = deepCopy(startMap);
+        System.out.println(nextMap);
     }
 
     private void configure() {
