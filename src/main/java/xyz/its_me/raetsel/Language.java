@@ -17,14 +17,4 @@ public class Language extends AbstractPerson {
     static List<Person> values() {
         return Arrays.asList(abap, cobol, algol, java, basic);
     }
-
-    @Override
-    public Language getLanguage() {
-        return this;
-    }
-
-    @Override
-    public void setLanguage(Person language) {
-        throw new AssertionError("cannot set this");
-    }
 }

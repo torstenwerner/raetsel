@@ -11,26 +11,6 @@ public interface Person {
 
     void set(Category category, Person person);
 
-    Person getTool();
-
-    void setTool(Person tool);
-
-    Person getLanguage();
-
-    void setLanguage(Person language);
-
-    Person getSector();
-
-    void setSector(Person sector);
-
-    Person getStatus();
-
-    void setStatus(Person status);
-
-    Person getField();
-
-    void setField(Person field);
-
     String name();
 
     static String nullSafeName(Person person) {

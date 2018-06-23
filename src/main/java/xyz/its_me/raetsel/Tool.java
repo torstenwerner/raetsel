@@ -17,14 +17,4 @@ public class Tool extends AbstractPerson {
     static List<Person> values() {
         return Arrays.asList(ppt, oo, kopf, aris, word);
     }
-
-    @Override
-    public Tool getTool() {
-        return this;
-    }
-
-    @Override
-    public void setTool(Person tool) {
-        throw new AssertionError("cannot set this");
-    }
 }

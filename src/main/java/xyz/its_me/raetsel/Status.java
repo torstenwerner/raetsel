@@ -17,14 +17,4 @@ public class Status extends AbstractPerson {
     static List<Person> values() {
         return Arrays.asList(ass, junior, senior, chief, partner);
     }
-
-    @Override
-    public Status getStatus() {
-        return this;
-    }
-
-    @Override
-    public void setStatus(Person status) {
-        throw new AssertionError("cannot set this");
-    }
 }

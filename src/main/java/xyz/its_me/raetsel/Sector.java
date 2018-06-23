@@ -17,14 +17,4 @@ public class Sector extends AbstractPerson {
     static List<Person> values() {
         return Arrays.asList(utility, telco, public_, chemistry, auto);
     }
-
-    @Override
-    public Sector getSector() {
-        return this;
-    }
-
-    @Override
-    public void setSector(Person sector) {
-        throw new AssertionError("cannot set this");
-    }
 }

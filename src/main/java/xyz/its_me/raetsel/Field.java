@@ -17,14 +17,4 @@ public class Field extends AbstractPerson {
     static List<Person> values() {
         return Arrays.asList(vw, phy, bw, inf, math);
     }
-
-    @Override
-    public Field getField() {
-        return this;
-    }
-
-    @Override
-    public void setField(Person field) {
-        throw new AssertionError("cannot set this");
-    }
 }

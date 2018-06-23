@@ -23,16 +23,16 @@ public class Solver implements ApplicationRunner {
     }
 
     private void configure() {
-        ppt.setLanguage(abap);
-        word.setLanguage(basic);
-        oo.setSector(telco);
-        java.setSector(chemistry);
-        auto.setStatus(ass);
-        aris.setStatus(partner);
-        kopf.setStatus(junior);
-        word.setField(math);
-        abap.setField(vw);
-        utility.setField(vw);
+        ppt.set(Category.Language, abap);
+        word.set(Category.Language, basic);
+        oo.set(Category.Sector, telco);
+        java.set(Category.Sector, chemistry);
+        auto.set(Category.Status, ass);
+        aris.set(Category.Status, partner);
+        kopf.set(Category.Status, junior);
+        word.set(Category.Field, math);
+        abap.set(Category.Field, vw);
+        utility.set(Category.Field, vw);
     }
 
     private int merge() {
