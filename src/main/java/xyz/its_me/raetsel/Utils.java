@@ -2,15 +2,8 @@ package xyz.its_me.raetsel;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 class Utils {
-    static long countNull(Object... objects) {
-        return Arrays.stream(objects)
-                .filter(Objects::isNull)
-                .count();
-    }
-
     private static long countNullForList(List<Person> personList) {
         return personList.stream().mapToLong(Person::countNullRelations).sum();
     }

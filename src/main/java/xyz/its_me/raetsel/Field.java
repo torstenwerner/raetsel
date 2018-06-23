@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Field extends AbstractPerson {
     private Field(String name) {
-        super(name);
+        super(Category.Field, name);
     }
 
     final static Field vw = new Field("vw");

@@ -1,9 +1,16 @@
 package xyz.its_me.raetsel;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 public interface Person {
+    Person get(Category category);
+
+    void set(Category category, Person person);
+
     Person getTool();
 
     void setTool(Person tool);
@@ -31,12 +38,18 @@ public interface Person {
     }
 
     default long countNullRelations() {
-        return Utils.countNull(getTool(), getLanguage(), getSector(), getStatus(), getField());
+        return Arrays.stream(Category.values())
+                .map(this::get)
+                .filter(Objects::isNull)
+                .count();
     }
 
     default String format() {
-        return String.format("%-10s%-10s%-10s%-10s%-10s", nullSafeName(getTool()), nullSafeName(getLanguage()),
-                nullSafeName(getSector()), nullSafeName(getStatus()), nullSafeName(getField()));
+        return Arrays.stream(Category.values())
+                .map(this::get)
+                .map(Person::nullSafeName)
+                .map(name -> String.format("%-10s", name))
+                .collect(Collectors.joining());
     }
 
     default int mergeByAccessor(Person otherPerson, UnaryOperator<Person> getter, BiConsumer<Person, Person> setter) {
@@ -60,18 +73,18 @@ public interface Person {
         if (otherPerson == null) {
             return 0;
         }
-        return mergeByAccessor(otherPerson, Person::getTool, Person::setTool) +
-                mergeByAccessor(otherPerson, Person::getLanguage, Person::setLanguage) +
-                mergeByAccessor(otherPerson, Person::getSector, Person::setSector) +
-                mergeByAccessor(otherPerson, Person::getStatus, Person::setStatus) +
-                mergeByAccessor(otherPerson, Person::getField, Person::setField);
+        return Arrays.stream(Category.values())
+                .mapToInt(category -> mergeByAccessor(
+                        otherPerson,
+                        (person) -> person.get(category),
+                        (target, source) -> target.set(category, source)))
+                .sum();
     }
 
     default int mergeRelations() {
-        return merge(getTool()) +
-                merge(getLanguage()) +
-                merge(getSector()) +
-                merge(getStatus()) +
-                merge(getField());
+        return Arrays.stream(Category.values())
+                .map(this::get)
+                .mapToInt(this::merge)
+                .sum();
     }
 }

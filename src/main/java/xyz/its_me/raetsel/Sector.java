@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Sector extends AbstractPerson {
     private Sector(String name) {
-        super(name);
+        super(Category.Sector, name);
     }
 
     final static Sector utility = new Sector("utility");

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Status extends AbstractPerson {
     private Status(String name) {
-        super(name);
+        super(Category.Status, name);
     }
 
     final static Status ass = new Status("ass");

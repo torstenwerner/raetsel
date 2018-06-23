@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Language extends AbstractPerson {
     private Language(String name) {
-        super(name);
+        super(Category.Language, name);
     }
 
     final static Language abap = new Language("abap");

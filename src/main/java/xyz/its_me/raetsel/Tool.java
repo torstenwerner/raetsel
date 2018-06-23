@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Tool extends AbstractPerson {
     private Tool(String name) {
-        super(name);
+        super(Category.Tool, name);
     }
 
     static final Tool ppt = new Tool("ppt");
