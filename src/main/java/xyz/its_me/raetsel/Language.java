@@ -1,5 +1,8 @@
 package xyz.its_me.raetsel;
 
+import static java.lang.String.format;
+import static xyz.its_me.raetsel.Utils.nullSafeName;
+
 public enum Language {
     abap,
     cobol,
@@ -42,5 +45,14 @@ public enum Language {
 
     public void setField(Field field) {
         this.field = field;
+    }
+
+    public long count() {
+        return Utils.countNonNull(tool, sector, status, field);
+    }
+
+    public String toString() {
+        return format("%-10s%-10s%-10s%-10s%-10s",
+                nullSafeName(tool), name(), nullSafeName(sector), nullSafeName(status), nullSafeName(field));
     }
 }
