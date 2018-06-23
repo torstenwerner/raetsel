@@ -33,6 +33,8 @@ public class Utils {
         printRelations(Sector.values());
         printRelations(Status.values());
         printRelations(Field.values());
+
+        System.out.printf("relation count: %d%n%n", Utils.countRelations());
     }
 
     static void nullSafeMergeRecursive(Person... persons) {

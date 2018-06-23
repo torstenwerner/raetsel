@@ -12,6 +12,7 @@ import static xyz.its_me.raetsel.Language.*;
 import static xyz.its_me.raetsel.Sector.*;
 import static xyz.its_me.raetsel.Status.*;
 import static xyz.its_me.raetsel.Tool.*;
+import static xyz.its_me.raetsel.Utils.nullSafeMergeRecursive;
 
 @Component
 public class Solver implements ApplicationRunner {
@@ -20,11 +21,12 @@ public class Solver implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         configure();
-        logger.info("relation count: {}", Utils.countRelations());
         Utils.printRelations();
 
-        Utils.nullSafeMergeRecursive(Tool.values());
-        logger.info("relation count: {}", Utils.countRelations());
+        merge();
+        Utils.printRelations();
+
+        merge();
         Utils.printRelations();
     }
 
@@ -39,5 +41,9 @@ public class Solver implements ApplicationRunner {
         word.setField(math);
         abap.setField(vw);
         utility.setField(vw);
+    }
+
+    private void merge() {
+        nullSafeMergeRecursive(Tool.values());
     }
 }

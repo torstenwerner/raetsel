@@ -44,7 +44,9 @@ public interface Person {
         final T otherValue = getter.apply(otherPerson);
         if (thisValue == null) {
             setter.accept(this, otherValue);
-        } else if (otherValue != null && thisValue != otherValue) {
+        } else if (otherValue == null) {
+            setter.accept(otherPerson, thisValue);
+        } else if (thisValue != otherValue) {
             throw new AssertionError("conflict");
         }
     }
