@@ -8,11 +8,11 @@ public class Field extends AbstractPerson {
         super(Category.Field, name);
     }
 
-    final static Field vw = new Field("vw");
-    final static Field phy = new Field("phy");
-    final static Field bw = new Field("bw");
-    final static Field inf = new Field("inf");
-    final static Field math = new Field("math");
+    final static Person vw = new AbstractPerson(Category.Field, "vw");
+    final static Person phy = new AbstractPerson(Category.Field, "phy");
+    final static Person bw = new AbstractPerson(Category.Field, "bw");
+    final static Person inf = new AbstractPerson(Category.Field, "inf");
+    final static Person math = new AbstractPerson(Category.Field, "math");
 
     static List<Person> values() {
         return Arrays.asList(vw, phy, bw, inf, math);

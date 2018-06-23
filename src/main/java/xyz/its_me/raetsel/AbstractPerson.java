@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
-abstract public class AbstractPerson implements Person {
+public class AbstractPerson implements Person {
     private Map<Category, Person> map = new EnumMap<>(Category.class);
 
     private final Category category;

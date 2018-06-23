@@ -8,11 +8,11 @@ public class Language extends AbstractPerson {
         super(Category.Language, name);
     }
 
-    final static Language abap = new Language("abap");
-    final static Language cobol = new Language("cobol");
-    final static Language algol = new Language("algol");
-    final static Language java = new Language("java");
-    final static Language basic = new Language("basic");
+    final static Person abap = new AbstractPerson(Category.Language, "abap");
+    final static Person cobol = new AbstractPerson(Category.Language, "cobol");
+    final static Person algol = new AbstractPerson(Category.Language, "algol");
+    final static Person java = new AbstractPerson(Category.Language, "java");
+    final static Person basic = new AbstractPerson(Category.Language, "basic");
 
     static List<Person> values() {
         return Arrays.asList(abap, cobol, algol, java, basic);

@@ -8,11 +8,11 @@ public class Status extends AbstractPerson {
         super(Category.Status, name);
     }
 
-    final static Status ass = new Status("ass");
-    final static Status junior = new Status("junior");
-    final static Status senior = new Status("senior");
-    final static Status chief = new Status("chief");
-    final static Status partner = new Status("partner");
+    final static Person ass = new AbstractPerson(Category.Status, "ass");
+    final static Person junior = new AbstractPerson(Category.Status, "junior");
+    final static Person senior = new AbstractPerson(Category.Status, "senior");
+    final static Person chief = new AbstractPerson(Category.Status, "chief");
+    final static Person partner = new AbstractPerson(Category.Status, "partner");
 
     static List<Person> values() {
         return Arrays.asList(ass, junior, senior, chief, partner);

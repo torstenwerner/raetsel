@@ -8,11 +8,11 @@ public class Sector extends AbstractPerson {
         super(Category.Sector, name);
     }
 
-    final static Sector utility = new Sector("utility");
-    final static Sector telco = new Sector("telco");
-    final static Sector public_ = new Sector("public");
-    final static Sector chemistry = new Sector("chemistry");
-    final static Sector auto = new Sector("auto");
+    final static Person utility = new AbstractPerson(Category.Sector, "utility");
+    final static Person telco = new AbstractPerson(Category.Sector, "telco");
+    final static Person public_ = new AbstractPerson(Category.Sector, "public");
+    final static Person chemistry = new AbstractPerson(Category.Sector, "chemistry");
+    final static Person auto = new AbstractPerson(Category.Sector, "auto");
 
     static List<Person> values() {
         return Arrays.asList(utility, telco, public_, chemistry, auto);
