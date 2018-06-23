@@ -3,7 +3,7 @@ package xyz.its_me.raetsel;
 import static java.lang.String.format;
 import static xyz.its_me.raetsel.Utils.nullSafeName;
 
-public enum Sector {
+public enum Sector implements Person {
     utility,
     telco,
     public_,
@@ -29,6 +29,16 @@ public enum Sector {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    @Override
+    public Sector getSector() {
+        return this;
+    }
+
+    @Override
+    public void setSector(Sector sector) {
+        throw new AssertionError("cannot set this");
     }
 
     public Status getStatus() {

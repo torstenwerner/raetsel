@@ -3,7 +3,7 @@ package xyz.its_me.raetsel;
 import static java.lang.String.format;
 import static xyz.its_me.raetsel.Utils.nullSafeName;
 
-public enum Tool {
+public enum Tool implements Person {
     ppt,
     oo,
     kopf,
@@ -15,38 +15,57 @@ public enum Tool {
     private Status status;
     private Field field;
 
+    @Override
+    public Tool getTool() {
+        return this;
+    }
+
+    @Override
+    public void setTool(Tool tool) {
+        throw new AssertionError("cannot set this");
+    }
+
+    @Override
     public Language getLanguage() {
         return language;
     }
 
+    @Override
     public void setLanguage(Language language) {
         this.language = language;
     }
 
+    @Override
     public Sector getSector() {
         return sector;
     }
 
+    @Override
     public void setSector(Sector sector) {
         this.sector = sector;
     }
 
+    @Override
     public Status getStatus() {
         return status;
     }
 
+    @Override
     public void setStatus(Status status) {
         this.status = status;
     }
 
+    @Override
     public Field getField() {
         return field;
     }
 
+    @Override
     public void setField(Field field) {
         this.field = field;
     }
 
+    @Override
     public long count() {
         return Utils.countNonNull(language, sector, status, field);
     }

@@ -2,7 +2,6 @@ package xyz.its_me.raetsel;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.ToLongFunction;
 
 public class Utils {
     public static long countNonNull(Object... objects) {
@@ -11,16 +10,16 @@ public class Utils {
                 .count();
     }
 
-    public static <T> long countForArray(T[] array, ToLongFunction<T> countSupplier) {
-        return Arrays.stream(array).mapToLong(countSupplier).sum();
+    public static long countForArray(Person[] array) {
+        return Arrays.stream(array).mapToLong(Person::count).sum();
     }
 
     public static long countRelations() {
-        return countForArray(Tool.values(), Tool::count) +
-                countForArray(Language.values(), Language::count) +
-                countForArray(Sector.values(), Sector::count) +
-                countForArray(Status.values(), Status::count) +
-                countForArray(Field.values(), Field::count);
+        return countForArray(Tool.values()) +
+                countForArray(Language.values()) +
+                countForArray(Sector.values()) +
+                countForArray(Status.values()) +
+                countForArray(Field.values());
     }
 
     public static String nullSafeName(Enum<?> enumObject) {

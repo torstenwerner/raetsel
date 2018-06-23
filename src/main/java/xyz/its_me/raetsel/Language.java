@@ -3,7 +3,7 @@ package xyz.its_me.raetsel;
 import static java.lang.String.format;
 import static xyz.its_me.raetsel.Utils.nullSafeName;
 
-public enum Language {
+public enum Language implements Person {
     abap,
     cobol,
     algol,
@@ -21,6 +21,16 @@ public enum Language {
 
     public void setTool(Tool tool) {
         this.tool = tool;
+    }
+
+    @Override
+    public Language getLanguage() {
+        return this;
+    }
+
+    @Override
+    public void setLanguage(Language language) {
+        throw new AssertionError("cannot set this");
     }
 
     public Sector getSector() {

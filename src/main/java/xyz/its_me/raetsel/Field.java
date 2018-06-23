@@ -3,7 +3,7 @@ package xyz.its_me.raetsel;
 import static java.lang.String.format;
 import static xyz.its_me.raetsel.Utils.nullSafeName;
 
-public enum Field {
+public enum Field implements Person {
     vw,
     phy,
     bw,
@@ -45,6 +45,16 @@ public enum Field {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public Field getField() {
+        return this;
+    }
+
+    @Override
+    public void setField(Field field) {
+        throw new AssertionError("cannot set this");
     }
 
     public long count() {

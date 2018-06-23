@@ -3,7 +3,7 @@ package xyz.its_me.raetsel;
 import static java.lang.String.format;
 import static xyz.its_me.raetsel.Utils.nullSafeName;
 
-public enum Status {
+public enum Status implements Person {
     ass,
     junior,
     senior,
@@ -37,6 +37,16 @@ public enum Status {
 
     public void setSector(Sector sector) {
         this.sector = sector;
+    }
+
+    @Override
+    public Status getStatus() {
+        return this;
+    }
+
+    @Override
+    public void setStatus(Status status) {
+        throw new AssertionError("cannot set this");
     }
 
     public Field getField() {
