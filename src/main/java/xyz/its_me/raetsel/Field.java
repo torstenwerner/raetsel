@@ -1,8 +1,5 @@
 package xyz.its_me.raetsel;
 
-import static java.lang.String.format;
-import static xyz.its_me.raetsel.Utils.nullSafeName;
-
 public enum Field implements Person {
     vw,
     phy,
@@ -55,10 +52,5 @@ public enum Field implements Person {
     @Override
     public void setField(Field field) {
         throw new AssertionError("cannot set this");
-    }
-
-    public String toString() {
-        return format("%-10s%-10s%-10s%-10s%-10s",
-                nullSafeName(tool), nullSafeName(language), nullSafeName(sector), nullSafeName(status), name());
     }
 }

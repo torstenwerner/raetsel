@@ -1,8 +1,5 @@
 package xyz.its_me.raetsel;
 
-import static java.lang.String.format;
-import static xyz.its_me.raetsel.Utils.nullSafeName;
-
 public enum Tool implements Person {
     ppt,
     oo,
@@ -63,10 +60,5 @@ public enum Tool implements Person {
     @Override
     public void setField(Field field) {
         this.field = field;
-    }
-
-    public String toString() {
-        return format("%-10s%-10s%-10s%-10s%-10s",
-                name(), nullSafeName(language), nullSafeName(sector), nullSafeName(status), nullSafeName(field));
     }
 }

@@ -26,8 +26,8 @@ public class Utils {
         return enumObject != null ? enumObject.name() : "";
     }
 
-    private static <T> void printRelations(T[] array) {
-        Arrays.stream(array).forEach(System.out::println);
+    private static void printRelations(Person[] array) {
+        Arrays.stream(array).map(Person::format).forEach(System.out::println);
         System.out.println();
     }
 
