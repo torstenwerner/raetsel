@@ -1,44 +1,25 @@
 package xyz.its_me.raetsel;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public enum Category {
-    Tool {
-        @Override
-        List<Person> persons() {
-            return Arrays.asList(ppt, oo, kopf, aris, word);
-        }
-    },
-    Language {
-        @Override
-        List<Person> persons() {
-            return Arrays.asList(abap, cobol, algol, java, basic);
-        }
-    },
-    Sector {
-        @Override
-        List<Person> persons() {
-            return Arrays.asList(utility, telco, public_, chemistry, auto);
-        }
-    },
-    Status {
-        @Override
-        List<Person> persons() {
-            return Arrays.asList(ass, junior, senior, chief, partner);
-        }
-    },
-    Field {
-        @Override
-        List<Person> persons() {
-            return Arrays.asList(vw, phy, bw, inf, math);
-        }
-    };
+    Tool,
+    Language,
+    Sector,
+    Status,
+    Field;
 
-    abstract List<Person> persons();
+    private final List<Person> personList = new ArrayList<>();
 
     private Person newPerson(String name) {
-        return new DefaultPerson(this, name);
+        final DefaultPerson person = new DefaultPerson(this, name);
+        personList.add(person);
+        return person;
+    }
+
+    List<Person> persons() {
+        return personList;
     }
 
     static final Person ppt = Tool.newPerson("ppt");
