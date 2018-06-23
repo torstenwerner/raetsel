@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Objects;
 
 class Utils {
-    static long countNonNull(Object... objects) {
+    static long countNull(Object... objects) {
         return Arrays.stream(objects)
-                .filter(Objects::nonNull)
+                .filter(Objects::isNull)
                 .count();
     }
 
-    private static long countForArray(List<Person> personList) {
-        return personList.stream().mapToLong(Person::countNonNullRelations).sum();
+    private static long countNullForList(List<Person> personList) {
+        return personList.stream().mapToLong(Person::countNullRelations).sum();
     }
 
-    private static long countRelations() {
-        return countForArray(Tool.values()) +
-                countForArray(Language.values()) +
-                countForArray(Sector.values()) +
-                countForArray(Status.values()) +
-                countForArray(Field.values());
+    private static long countNullRelations() {
+        return countNullForList(Tool.values()) +
+                countNullForList(Language.values()) +
+                countNullForList(Sector.values()) +
+                countNullForList(Status.values()) +
+                countNullForList(Field.values());
     }
 
     private static void printRelations(List<Person> personList) {
@@ -35,7 +35,7 @@ class Utils {
         printRelations(Status.values());
         printRelations(Field.values());
 
-        System.out.printf("relation count: %d%n%n", Utils.countRelations());
+        System.out.printf("missing relation count: %d%n%n", Utils.countNullRelations());
     }
 
     @SafeVarargs

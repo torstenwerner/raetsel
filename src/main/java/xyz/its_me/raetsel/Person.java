@@ -30,8 +30,8 @@ public interface Person {
         return person != null ? person.name() : "";
     }
 
-    default long countNonNullRelations() {
-        return Utils.countNonNull(getTool(), getLanguage(), getSector(), getStatus(), getField()) - 1;
+    default long countNullRelations() {
+        return Utils.countNull(getTool(), getLanguage(), getSector(), getStatus(), getField());
     }
 
     default String format() {
