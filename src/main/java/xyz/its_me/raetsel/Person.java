@@ -39,35 +39,41 @@ public interface Person {
                 nullSafeName(getSector()), nullSafeName(getStatus()), nullSafeName(getField()));
     }
 
-    default <T extends Person> void mergeByAccessor(Person otherPerson, Function<Person, T> getter, BiConsumer<Person, T> setter) {
+    default <T extends Person> int mergeByAccessor(Person otherPerson, Function<Person, T> getter, BiConsumer<Person, T> setter) {
         final T thisValue = getter.apply(this);
         final T otherValue = getter.apply(otherPerson);
-        if (thisValue == null) {
+        if (thisValue == null && otherValue != null) {
             setter.accept(this, otherValue);
-        } else if (otherValue == null) {
+            return 1;
+        }
+        if (thisValue != null & otherValue == null) {
             setter.accept(otherPerson, thisValue);
-        } else if (thisValue != otherValue) {
+            return 1;
+        }
+        if (thisValue != otherValue) {
             throw new AssertionError("conflict");
         }
+        return 0;
     }
 
-    default void merge(Person otherPerson) {
-        if (otherPerson != null) {
-            mergeByAccessor(otherPerson, Person::getTool, Person::setTool);
-            mergeByAccessor(otherPerson, Person::getLanguage, Person::setLanguage);
-            mergeByAccessor(otherPerson, Person::getSector, Person::setSector);
-            mergeByAccessor(otherPerson, Person::getStatus, Person::setStatus);
-            mergeByAccessor(otherPerson, Person::getField, Person::setField);
+    default int merge(Person otherPerson) {
+        if (otherPerson == null) {
+            return 0;
         }
+        return mergeByAccessor(otherPerson, Person::getTool, Person::setTool) +
+                mergeByAccessor(otherPerson, Person::getLanguage, Person::setLanguage) +
+                mergeByAccessor(otherPerson, Person::getSector, Person::setSector) +
+                mergeByAccessor(otherPerson, Person::getStatus, Person::setStatus) +
+                mergeByAccessor(otherPerson, Person::getField, Person::setField);
     }
 
-    default void mergeRelations() {
-        merge(getTool());
-        merge(getLanguage());
-        merge(getSector());
-        merge(getStatus());
-        merge(getField());
+    default int mergeRelations() {
+        return merge(getTool()) +
+                merge(getLanguage()) +
+                merge(getSector()) +
+                merge(getStatus()) +
+                merge(getField());
     }
 
-    void mergeRecursive();
+    int mergeRecursive();
 }

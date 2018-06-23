@@ -57,8 +57,8 @@ public enum Language implements Person {
     }
 
     @Override
-    public void mergeRecursive() {
-        mergeRelations();
-        nullSafeMergeRecursive(sector, status, field);
+    public int mergeRecursive() {
+        return mergeRelations() +
+                nullSafeMergeRecursive(sector, status, field);
     }
 }

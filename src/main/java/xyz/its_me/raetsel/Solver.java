@@ -21,13 +21,9 @@ public class Solver implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         configure();
-        Utils.printRelations();
-
-        merge();
-        Utils.printRelations();
-
-        merge();
-        Utils.printRelations();
+        do {
+            Utils.printRelations();
+        } while (merge() > 0);
     }
 
     private void configure() {
@@ -43,7 +39,7 @@ public class Solver implements ApplicationRunner {
         utility.setField(vw);
     }
 
-    private void merge() {
-        nullSafeMergeRecursive(Tool.values());
+    private int merge() {
+        return nullSafeMergeRecursive(Tool.values());
     }
 }

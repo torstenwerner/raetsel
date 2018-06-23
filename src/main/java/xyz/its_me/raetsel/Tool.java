@@ -65,8 +65,8 @@ public enum Tool implements Person {
     }
 
     @Override
-    public void mergeRecursive() {
-        this.mergeRelations();
-        nullSafeMergeRecursive(language, sector, status, field);
+    public int mergeRecursive() {
+        return this.mergeRelations() +
+                nullSafeMergeRecursive(language, sector, status, field);
     }
 }

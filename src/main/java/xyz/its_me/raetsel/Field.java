@@ -55,7 +55,7 @@ public enum Field implements Person {
     }
 
     @Override
-    public void mergeRecursive() {
-        this.mergeRelations();
+    public int mergeRecursive() {
+        return this.mergeRelations();
     }
 }

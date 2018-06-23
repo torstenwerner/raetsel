@@ -57,8 +57,8 @@ public enum Status implements Person {
     }
 
     @Override
-    public void mergeRecursive() {
-        this.mergeRelations();
-        nullSafeMergeRecursive(field);
+    public int mergeRecursive() {
+        return this.mergeRelations() +
+                nullSafeMergeRecursive(field);
     }
 }

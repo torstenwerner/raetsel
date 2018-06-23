@@ -37,7 +37,10 @@ public class Utils {
         System.out.printf("relation count: %d%n%n", Utils.countRelations());
     }
 
-    static void nullSafeMergeRecursive(Person... persons) {
-        Arrays.stream(persons).filter(Objects::nonNull).forEach(Person::mergeRecursive);
+    static int nullSafeMergeRecursive(Person... persons) {
+        return Arrays.stream(persons)
+                .filter(Objects::nonNull)
+                .mapToInt(Person::mergeRecursive)
+                .sum();
     }
 }

@@ -57,8 +57,8 @@ public enum Sector implements Person {
     }
 
     @Override
-    public void mergeRecursive() {
-        this.mergeRelations();
-        nullSafeMergeRecursive(status, field);
+    public int mergeRecursive() {
+        return this.mergeRelations() +
+                nullSafeMergeRecursive(status, field);
     }
 }
