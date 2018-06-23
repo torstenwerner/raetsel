@@ -37,33 +37,33 @@ public enum Category {
 
     abstract List<Person> persons();
 
-    static final Person ppt = new AbstractPerson(Category.Tool, "ppt");
-    static final Person oo = new AbstractPerson(Category.Tool, "oo");
-    static final Person kopf = new AbstractPerson(Category.Tool, "kopf");
-    static final Person aris = new AbstractPerson(Category.Tool, "aris");
-    static final Person word = new AbstractPerson(Category.Tool, "word");
+    static final Person ppt = new DefaultPerson(Category.Tool, "ppt");
+    static final Person oo = new DefaultPerson(Category.Tool, "oo");
+    static final Person kopf = new DefaultPerson(Category.Tool, "kopf");
+    static final Person aris = new DefaultPerson(Category.Tool, "aris");
+    static final Person word = new DefaultPerson(Category.Tool, "word");
 
-    final static Person abap = new AbstractPerson(Category.Language, "abap");
-    final static Person cobol = new AbstractPerson(Category.Language, "cobol");
-    final static Person algol = new AbstractPerson(Category.Language, "algol");
-    final static Person java = new AbstractPerson(Category.Language, "java");
-    final static Person basic = new AbstractPerson(Category.Language, "basic");
+    final static Person abap = new DefaultPerson(Category.Language, "abap");
+    final static Person cobol = new DefaultPerson(Category.Language, "cobol");
+    final static Person algol = new DefaultPerson(Category.Language, "algol");
+    final static Person java = new DefaultPerson(Category.Language, "java");
+    final static Person basic = new DefaultPerson(Category.Language, "basic");
 
-    final static Person utility = new AbstractPerson(Category.Sector, "utility");
-    final static Person telco = new AbstractPerson(Category.Sector, "telco");
-    final static Person public_ = new AbstractPerson(Category.Sector, "public");
-    final static Person chemistry = new AbstractPerson(Category.Sector, "chemistry");
-    final static Person auto = new AbstractPerson(Category.Sector, "auto");
+    final static Person utility = new DefaultPerson(Category.Sector, "utility");
+    final static Person telco = new DefaultPerson(Category.Sector, "telco");
+    final static Person public_ = new DefaultPerson(Category.Sector, "public");
+    final static Person chemistry = new DefaultPerson(Category.Sector, "chemistry");
+    final static Person auto = new DefaultPerson(Category.Sector, "auto");
 
-    final static Person ass = new AbstractPerson(Category.Status, "ass");
-    final static Person junior = new AbstractPerson(Category.Status, "junior");
-    final static Person senior = new AbstractPerson(Category.Status, "senior");
-    final static Person chief = new AbstractPerson(Category.Status, "chief");
-    final static Person partner = new AbstractPerson(Category.Status, "partner");
+    final static Person ass = new DefaultPerson(Category.Status, "ass");
+    final static Person junior = new DefaultPerson(Category.Status, "junior");
+    final static Person senior = new DefaultPerson(Category.Status, "senior");
+    final static Person chief = new DefaultPerson(Category.Status, "chief");
+    final static Person partner = new DefaultPerson(Category.Status, "partner");
 
-    final static Person vw = new AbstractPerson(Category.Field, "vw");
-    final static Person phy = new AbstractPerson(Category.Field, "phy");
-    final static Person bw = new AbstractPerson(Category.Field, "bw");
-    final static Person inf = new AbstractPerson(Category.Field, "inf");
-    final static Person math = new AbstractPerson(Category.Field, "math");
+    final static Person vw = new DefaultPerson(Category.Field, "vw");
+    final static Person phy = new DefaultPerson(Category.Field, "phy");
+    final static Person bw = new DefaultPerson(Category.Field, "bw");
+    final static Person inf = new DefaultPerson(Category.Field, "inf");
+    final static Person math = new DefaultPerson(Category.Field, "math");
 }

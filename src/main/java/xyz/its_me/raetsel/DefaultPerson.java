@@ -4,13 +4,13 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class AbstractPerson implements Person {
+public class DefaultPerson implements Person {
     private Map<Category, Person> map = new EnumMap<>(Category.class);
 
     private final Category category;
     private final String name;
 
-    AbstractPerson(Category category, String name) {
+    DefaultPerson(Category category, String name) {
         this.category = category;
         this.name = name;
     }
