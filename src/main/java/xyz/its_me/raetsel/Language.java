@@ -1,23 +1,21 @@
 package xyz.its_me.raetsel;
 
-public enum Language implements Person {
-    abap,
-    cobol,
-    algol,
-    java,
-    basic;
+import java.util.Arrays;
+import java.util.List;
 
-    private Tool tool;
-    private Sector sector;
-    private Status status;
-    private Field field;
-
-    public Tool getTool() {
-        return tool;
+public class Language extends AbstractPerson {
+    private Language(String name) {
+        super(name);
     }
 
-    public void setTool(Tool tool) {
-        this.tool = tool;
+    final static Language abap = new Language("abap");
+    final static Language cobol = new Language("cobol");
+    final static Language algol = new Language("algol");
+    final static Language java = new Language("java");
+    final static Language basic = new Language("basic");
+
+    static List<Person> values() {
+        return Arrays.asList(abap, cobol, algol, java, basic);
     }
 
     @Override
@@ -28,29 +26,5 @@ public enum Language implements Person {
     @Override
     public void setLanguage(Language language) {
         throw new AssertionError("cannot set this");
-    }
-
-    public Sector getSector() {
-        return sector;
-    }
-
-    public void setSector(Sector sector) {
-        this.sector = sector;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
     }
 }

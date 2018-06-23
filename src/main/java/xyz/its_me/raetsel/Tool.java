@@ -1,16 +1,22 @@
 package xyz.its_me.raetsel;
 
-public enum Tool implements Person {
-    ppt,
-    oo,
-    kopf,
-    aris,
-    word;
+import java.util.Arrays;
+import java.util.List;
 
-    private Language language;
-    private Sector sector;
-    private Status status;
-    private Field field;
+public class Tool extends AbstractPerson {
+    private Tool(String name) {
+        super(name);
+    }
+
+    static final Tool ppt = new Tool("ppt");
+    static final Tool oo = new Tool("oo");
+    static final Tool kopf = new Tool("kopf");
+    static final Tool aris = new Tool("aris");
+    static final Tool word = new Tool("word");
+
+    static List<Person> values() {
+        return Arrays.asList(ppt, oo, kopf, aris, word);
+    }
 
     @Override
     public Tool getTool() {
@@ -20,45 +26,5 @@ public enum Tool implements Person {
     @Override
     public void setTool(Tool tool) {
         throw new AssertionError("cannot set this");
-    }
-
-    @Override
-    public Language getLanguage() {
-        return language;
-    }
-
-    @Override
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    @Override
-    public Sector getSector() {
-        return sector;
-    }
-
-    @Override
-    public void setSector(Sector sector) {
-        this.sector = sector;
-    }
-
-    @Override
-    public Status getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    @Override
-    public Field getField() {
-        return field;
-    }
-
-    @Override
-    public void setField(Field field) {
-        this.field = field;
     }
 }

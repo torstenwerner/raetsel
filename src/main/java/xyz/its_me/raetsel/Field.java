@@ -1,47 +1,21 @@
 package xyz.its_me.raetsel;
 
-public enum Field implements Person {
-    vw,
-    phy,
-    bw,
-    inf,
-    math;
+import java.util.Arrays;
+import java.util.List;
 
-    private Tool tool;
-    private Language language;
-    private Sector sector;
-    private Status status;
-
-    public Tool getTool() {
-        return tool;
+public class Field extends AbstractPerson {
+    private Field(String name) {
+        super(name);
     }
 
-    public void setTool(Tool tool) {
-        this.tool = tool;
-    }
+    final static Field vw = new Field("vw");
+    final static Field phy = new Field("phy");
+    final static Field bw = new Field("bw");
+    final static Field inf = new Field("inf");
+    final static Field math = new Field("math");
 
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public Sector getSector() {
-        return sector;
-    }
-
-    public void setSector(Sector sector) {
-        this.sector = sector;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    static List<Person> values() {
+        return Arrays.asList(vw, phy, bw, inf, math);
     }
 
     @Override

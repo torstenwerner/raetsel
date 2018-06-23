@@ -1,39 +1,21 @@
 package xyz.its_me.raetsel;
 
-public enum Status implements Person {
-    ass,
-    junior,
-    senior,
-    chief,
-    partner;
+import java.util.Arrays;
+import java.util.List;
 
-    private Tool tool;
-    private Language language;
-    private Sector sector;
-    private Field field;
-
-    public Tool getTool() {
-        return tool;
+public class Status extends AbstractPerson {
+    private Status(String name) {
+        super(name);
     }
 
-    public void setTool(Tool tool) {
-        this.tool = tool;
-    }
+    final static Status ass = new Status("ass");
+    final static Status junior = new Status("junior");
+    final static Status senior = new Status("senior");
+    final static Status chief = new Status("chief");
+    final static Status partner = new Status("partner");
 
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public Sector getSector() {
-        return sector;
-    }
-
-    public void setSector(Sector sector) {
-        this.sector = sector;
+    static List<Person> values() {
+        return Arrays.asList(ass, junior, senior, chief, partner);
     }
 
     @Override
@@ -44,13 +26,5 @@ public enum Status implements Person {
     @Override
     public void setStatus(Status status) {
         throw new AssertionError("cannot set this");
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
     }
 }

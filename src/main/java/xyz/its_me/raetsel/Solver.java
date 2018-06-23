@@ -1,7 +1,5 @@
 package xyz.its_me.raetsel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -16,10 +14,8 @@ import static xyz.its_me.raetsel.Utils.mergeRelations;
 
 @Component
 public class Solver implements ApplicationRunner {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         configure();
         do {
             Utils.printRelations();
@@ -41,6 +37,5 @@ public class Solver implements ApplicationRunner {
 
     private int merge() {
         return mergeRelations(Tool.values(), Language.values(), Sector.values(), Status.values(), Field.values());
-
     }
 }

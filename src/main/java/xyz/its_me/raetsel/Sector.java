@@ -1,31 +1,21 @@
 package xyz.its_me.raetsel;
 
-public enum Sector implements Person {
-    utility,
-    telco,
-    public_,
-    chemistry,
-    auto;
+import java.util.Arrays;
+import java.util.List;
 
-    private Tool tool;
-    private Language language;
-    private Status status;
-    private Field field;
-
-    public Tool getTool() {
-        return tool;
+public class Sector extends AbstractPerson {
+    private Sector(String name) {
+        super(name);
     }
 
-    public void setTool(Tool tool) {
-        this.tool = tool;
-    }
+    final static Sector utility = new Sector("utility");
+    final static Sector telco = new Sector("telco");
+    final static Sector public_ = new Sector("public");
+    final static Sector chemistry = new Sector("chemistry");
+    final static Sector auto = new Sector("auto");
 
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
+    static List<Person> values() {
+        return Arrays.asList(utility, telco, public_, chemistry, auto);
     }
 
     @Override
@@ -36,21 +26,5 @@ public enum Sector implements Person {
     @Override
     public void setSector(Sector sector) {
         throw new AssertionError("cannot set this");
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
     }
 }
