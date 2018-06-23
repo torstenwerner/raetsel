@@ -1,5 +1,7 @@
 package xyz.its_me.raetsel;
 
+import static xyz.its_me.raetsel.Utils.nullSafeMergeRecursive;
+
 public enum Tool implements Person {
     ppt,
     oo,
@@ -60,5 +62,11 @@ public enum Tool implements Person {
     @Override
     public void setField(Field field) {
         this.field = field;
+    }
+
+    @Override
+    public void mergeRecursive() {
+        this.mergeRelations();
+        nullSafeMergeRecursive(language, sector, status, field);
     }
 }

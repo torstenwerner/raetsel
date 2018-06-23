@@ -34,4 +34,8 @@ public class Utils {
         printRelations(Status.values());
         printRelations(Field.values());
     }
+
+    static void nullSafeMergeRecursive(Person... persons) {
+        Arrays.stream(persons).filter(Objects::nonNull).forEach(Person::mergeRecursive);
+    }
 }

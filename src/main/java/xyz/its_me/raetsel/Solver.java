@@ -20,7 +20,10 @@ public class Solver implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         configure();
+        logger.info("relation count: {}", Utils.countRelations());
+        Utils.printRelations();
 
+        Utils.nullSafeMergeRecursive(Tool.values());
         logger.info("relation count: {}", Utils.countRelations());
         Utils.printRelations();
     }

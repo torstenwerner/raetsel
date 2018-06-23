@@ -1,5 +1,7 @@
 package xyz.its_me.raetsel;
 
+import static xyz.its_me.raetsel.Utils.nullSafeMergeRecursive;
+
 public enum Sector implements Person {
     utility,
     telco,
@@ -52,5 +54,11 @@ public enum Sector implements Person {
 
     public void setField(Field field) {
         this.field = field;
+    }
+
+    @Override
+    public void mergeRecursive() {
+        this.mergeRelations();
+        nullSafeMergeRecursive(status, field);
     }
 }

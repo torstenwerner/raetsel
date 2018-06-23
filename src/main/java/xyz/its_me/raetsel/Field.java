@@ -53,4 +53,9 @@ public enum Field implements Person {
     public void setField(Field field) {
         throw new AssertionError("cannot set this");
     }
+
+    @Override
+    public void mergeRecursive() {
+        this.mergeRelations();
+    }
 }
