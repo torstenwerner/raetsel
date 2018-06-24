@@ -4,6 +4,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 import static xyz.its_me.raetsel.Category.*;
@@ -14,9 +16,12 @@ public class Solver implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         configure();
         final DataContainer firstContainer = new DataContainer();
+        final Instant start = Instant.now();
         final List<DataContainer> results = firstContainer.iterate();
+        final Instant stop = Instant.now();
         results.forEach(DataContainer::printFirstRelations);
         System.out.printf("solution count: %d%n", results.size());
+        System.out.printf("time: %d ms%n", Duration.between(start, stop).toMillis());
     }
 
     private void configure() {
