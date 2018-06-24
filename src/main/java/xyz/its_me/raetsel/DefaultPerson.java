@@ -16,14 +16,19 @@ public class DefaultPerson implements Person {
         this.name = name;
     }
 
-    DefaultPerson(Person person) {
-        this.category = person.getCategory();
-        this.name = person.name();
+    static Person copy(Person person, Map<Person, Person> copyCache) {
+        if (copyCache.containsKey(person)) {
+            return copyCache.get(person);
+        }
+        final Person personCopy = new DefaultPerson(person.getCategory(), person.name());
+        copyCache.put(person, personCopy);
         Arrays.stream(Category.values())
-                .filter(category -> category != this.category)
+                .filter(category -> category != person.getCategory())
                 .map(person::get)
                 .filter(Objects::nonNull)
-                .forEach(this::set);
+                .map(otherPerson -> copy(otherPerson, copyCache))
+                .forEach(personCopy::set);
+        return personCopy;
     }
 
     @Override
@@ -56,7 +61,8 @@ public class DefaultPerson implements Person {
     @Override
     public String toString() {
         return "DefaultPerson{" +
-                "category=" + category +
+                "map=" + map.keySet() +
+                ", category=" + category +
                 ", name='" + name + '\'' +
                 '}';
     }

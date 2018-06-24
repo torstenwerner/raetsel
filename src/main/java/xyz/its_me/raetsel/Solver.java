@@ -4,25 +4,25 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static xyz.its_me.raetsel.Category.*;
+import static xyz.its_me.raetsel.Utils.deepCopy;
 
 @Component
 public class Solver implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         configure();
-        do {
-            Utils.printRelations();
-        } while (merge() > 0);
-
         final Map<Category, List<Person>> startMap = Category.toMap();
-        System.out.println(startMap);
         final Map<Category, List<Person>> nextMap = deepCopy(startMap);
-        System.out.println(nextMap);
+        int changes;
+        do {
+            Utils.printRelations(nextMap);
+            changes = merge(nextMap);
+            System.out.printf("changes: %d%n", changes);
+        } while (changes > 0);
     }
 
     private void configure() {
@@ -38,9 +38,8 @@ public class Solver implements ApplicationRunner {
         utility.set(vw);
     }
 
-    private int merge() {
-        return Arrays.stream(Category.values())
-                .map(Category::persons)
+    private int merge(Map<Category, List<Person>> personMap) {
+        return personMap.values().stream()
                 .flatMap(List::stream)
                 .mapToInt(Person::mergeRelations)
                 .sum();

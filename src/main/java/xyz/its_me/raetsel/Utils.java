@@ -1,16 +1,19 @@
 package xyz.its_me.raetsel;
 
-import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 class Utils {
     private static long countNullForList(List<Person> personList) {
         return personList.stream().mapToLong(Person::countNullRelations).sum();
     }
 
-    private static long countNullRelations() {
-        return Arrays.stream(Category.values())
-                .map(Category::persons)
+    private static long countNullRelations(Map<Category, List<Person>> personMap) {
+        return personMap.values().stream()
                 .mapToLong(Utils::countNullForList)
                 .sum();
     }
@@ -20,11 +23,22 @@ class Utils {
         System.out.println();
     }
 
-    static void printRelations() {
-        Arrays.stream(Category.values())
-                .map(Category::persons)
-                .forEach(Utils::printRelations);
+    static void printRelations(Map<Category, List<Person>> personMap) {
+        personMap.values().forEach(Utils::printRelations);
 
-        System.out.printf("missing relation count: %d%n%n", Utils.countNullRelations());
+        System.out.printf("missing relation count: %d%n%n", Utils.countNullRelations(personMap));
+    }
+
+    static Map<Category, List<Person>> deepCopy(Map<Category, List<Person>> sourceMap) {
+        final Map<Person, Person> copyCache = new HashMap<>(sourceMap.size() * Category.values().length);
+        final Map<Category, List<Person>> targetMap = new EnumMap<>(Category.class);
+        sourceMap.forEach((key, value) -> targetMap.put(key, deepCopy(value, copyCache)));
+        return targetMap;
+    }
+
+    private static List<Person> deepCopy(List<Person> personList, Map<Person, Person> copyCache) {
+        return personList.stream()
+                .map(person -> DefaultPerson.copy(person, copyCache))
+                .collect(toList());
     }
 }
