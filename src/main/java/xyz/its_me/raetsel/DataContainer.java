@@ -1,6 +1,10 @@
 package xyz.its_me.raetsel;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
@@ -8,6 +12,8 @@ import static java.util.stream.Collectors.toList;
 
 class DataContainer {
     private final Map<Category, List<Person>> data;
+
+    private final static ExecutorService executorService = Executors.newCachedThreadPool();
 
     private DataContainer(Map<Category, List<Person>> data) {
         this.data = data;
@@ -122,10 +128,23 @@ class DataContainer {
         if (candidateRelations.isEmpty()) {
             return singletonList(this);
         }
-        return candidateRelations.stream()
+        final List<Future<List<DataContainer>>> futures = candidateRelations.stream()
                 .map(this::tryCandidate)
                 .filter(Objects::nonNull)
-                .flatMap(dataContainer -> dataContainer.iterate().stream())
+                .map(dataContainer -> executorService.submit(dataContainer::iterate))
                 .collect(toList());
+        return futures.stream()
+                .flatMap(listFuture -> {
+                    try {
+                        return listFuture.get().stream();
+                    } catch (InterruptedException | ExecutionException e) {
+                        throw new RuntimeException("future failed", e);
+                    }
+                })
+                .collect(toList());
+    }
+
+    static void shutdown() {
+        executorService.shutdown();
     }
 }

@@ -22,6 +22,8 @@ public class Solver implements ApplicationRunner {
         results.forEach(DataContainer::printFirstRelations);
         System.out.printf("solution count: %d%n", results.size());
         System.out.printf("time: %d ms%n", Duration.between(start, stop).toMillis());
+
+        DataContainer.shutdown();
     }
 
     private void configure() {
