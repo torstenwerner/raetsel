@@ -8,7 +8,6 @@ import static java.util.stream.Collectors.toList;
 
 class DataContainer {
     private final Map<Category, List<Person>> data;
-    private Map<Person, Person> copyCache;
 
     private DataContainer(Map<Category, List<Person>> data) {
         this.data = data;
@@ -17,19 +16,6 @@ class DataContainer {
     DataContainer() {
         this(Category.toMap());
         mergeRecursively();
-    }
-
-    private DataContainer deepCopy() {
-        copyCache = new HashMap<>(data.size() * Category.values().length);
-        final Map<Category, List<Person>> targetMap = new EnumMap<>(Category.class);
-        data.forEach((key, value) -> targetMap.put(key, deepCopy(value, copyCache)));
-        return new DataContainer(targetMap);
-    }
-
-    private List<Person> deepCopy(List<Person> personList, Map<Person, Person> copyCache) {
-        return personList.stream()
-                .map(person -> DefaultPerson.copy(person, copyCache))
-                .collect(toList());
     }
 
     private void printRelations() {
@@ -98,9 +84,13 @@ class DataContainer {
     private DataContainer tryCandidate(CandidateRelation candidateRelation) {
         System.out.printf("trying candidate: %s%n", candidateRelation);
 
-        final DataContainer nextContainer = deepCopy();
-        final Person sourcePerson = copyCache.get(candidateRelation.getSourcePerson());
-        final Person targetPerson = copyCache.get(candidateRelation.getTargetPerson());
+        final DataContainer nextContainer;
+        final Person sourcePerson;
+        final Person targetPerson;
+        final Map<Person, Person> copyCache = new HashMap<>(dataSize());
+        nextContainer = deepCopy(copyCache);
+        sourcePerson = copyCache.get(candidateRelation.getSourcePerson());
+        targetPerson = copyCache.get(candidateRelation.getTargetPerson());
         sourcePerson.set(targetPerson);
         try {
             nextContainer.mergeRecursively();
@@ -109,6 +99,22 @@ class DataContainer {
             return null;
         }
         return nextContainer;
+    }
+
+    private int dataSize() {
+        return data.size() * data.get(Category.values()[0]).size();
+    }
+
+    private DataContainer deepCopy(Map<Person, Person> copyCache) {
+        final Map<Category, List<Person>> targetMap = new EnumMap<>(Category.class);
+        data.forEach((key, value) -> targetMap.put(key, deepCopy(value, copyCache)));
+        return new DataContainer(targetMap);
+    }
+
+    private List<Person> deepCopy(List<Person> personList, Map<Person, Person> copyCache) {
+        return personList.stream()
+                .map(person -> DefaultPerson.copy(person, copyCache))
+                .collect(toList());
     }
 
     List<DataContainer> iterate() {
