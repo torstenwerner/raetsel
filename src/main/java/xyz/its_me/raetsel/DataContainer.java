@@ -50,7 +50,7 @@ class DataContainer {
         do {
             //printRelations();
             changes = merge();
-            System.out.printf("changes: %d%n", changes);
+            //System.out.printf("changes: %d%n", changes);
         } while (changes > 0);
 
     }
@@ -88,7 +88,7 @@ class DataContainer {
     }
 
     private DataContainer tryCandidate(CandidateRelation candidateRelation) {
-        System.out.printf("trying candidate: %s%n", candidateRelation);
+        //System.out.printf("trying candidate: %s%n", candidateRelation);
 
         final DataContainer nextContainer;
         final Person sourcePerson;
@@ -101,7 +101,7 @@ class DataContainer {
         try {
             nextContainer.mergeRecursively();
         } catch (ConflictException e) {
-            System.out.printf("conflict: %s%n", e);
+            //System.out.printf("conflict: %s%n", e);
             return null;
         }
         return nextContainer;

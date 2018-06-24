@@ -19,7 +19,7 @@ public class Solver implements ApplicationRunner {
         final Instant start = Instant.now();
         final List<DataContainer> results = firstContainer.iterate();
         final Instant stop = Instant.now();
-        results.forEach(DataContainer::printFirstRelations);
+        //results.forEach(DataContainer::printFirstRelations);
         System.out.printf("solution count: %d%n", results.size());
         System.out.printf("time: %d ms%n", Duration.between(start, stop).toMillis());
 
@@ -34,8 +34,8 @@ public class Solver implements ApplicationRunner {
         auto.set(ass);
         aris.set(partner);
         kopf.set(junior);
-        word.set(math);
-        abap.set(vw);
-        utility.set(vw);
+        //word.set(math);
+        //abap.set(vw);
+        //utility.set(vw);
     }
 }
