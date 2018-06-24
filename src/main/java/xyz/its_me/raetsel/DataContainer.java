@@ -52,7 +52,7 @@ class DataContainer {
                 .sum();
     }
 
-    Optional<Pair<Person, Category>> firstMissingCondition() {
+    Optional<Tuple<Person, Category, List<Person>>> candidates() {
         return Arrays.stream(Category.values())
                 .flatMap(leftCategory ->
                         Arrays.stream(Category.values())
@@ -62,14 +62,14 @@ class DataContainer {
                         data.get(pair.getFirst()).stream()
                                 .map(person -> new Tuple<>(pair.getFirst(), pair.getSecond(), person)))
                 .filter(tuple -> tuple.getThird().get(tuple.getSecond()) == null)
-                .map(tuple -> new Pair<>(tuple.getThird(), tuple.getSecond()))
+                .map(tuple -> new Tuple<>(tuple.getThird(), tuple.getSecond(), candidates(tuple.getThird(), tuple.getSecond())))
                 .findFirst();
     }
 
-    List<Person> candidates(Pair<Person, Category> pair) {
-        final Category firstCategory = pair.getFirst().getCategory();
-        return data.get(pair.getSecond()).stream()
-                .filter(person -> person.get(firstCategory) == null)
+    private List<Person> candidates(Person person, Category category) {
+        final Category firstCategory = person.getCategory();
+        return data.get(category).stream()
+                .filter(otherPerson -> otherPerson.get(firstCategory) == null)
                 .collect(toList());
     }
 }
