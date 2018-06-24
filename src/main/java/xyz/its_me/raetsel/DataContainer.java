@@ -1,6 +1,7 @@
 package xyz.its_me.raetsel;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -52,7 +53,7 @@ class DataContainer {
                 .sum();
     }
 
-    Optional<Tuple<Person, Category, List<Person>>> candidates() {
+    List<CandidateRelation> candidates() {
         return Arrays.stream(Category.values())
                 .flatMap(leftCategory ->
                         Arrays.stream(Category.values())
@@ -62,8 +63,12 @@ class DataContainer {
                         data.get(pair.getFirst()).stream()
                                 .map(person -> new Tuple<>(pair.getFirst(), pair.getSecond(), person)))
                 .filter(tuple -> tuple.getThird().get(tuple.getSecond()) == null)
-                .map(tuple -> new Tuple<>(tuple.getThird(), tuple.getSecond(), candidates(tuple.getThird(), tuple.getSecond())))
-                .findFirst();
+                .findFirst()
+                .map(tuple ->
+                        candidates(tuple.getThird(), tuple.getSecond()).stream()
+                                .map(person -> new CandidateRelation(tuple.getThird(), tuple.getSecond(), person)))
+                .orElse(Stream.empty())
+                .collect(toList());
     }
 
     private List<Person> candidates(Person person, Category category) {

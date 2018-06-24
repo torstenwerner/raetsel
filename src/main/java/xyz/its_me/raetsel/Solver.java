@@ -4,7 +4,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import static java.util.stream.Collectors.toList;
 import static xyz.its_me.raetsel.Category.*;
 
 @Component
@@ -21,11 +20,7 @@ public class Solver implements ApplicationRunner {
             System.out.printf("changes: %d%n", changes);
         } while (changes > 0);
 
-        nextContainer.candidates()
-                .ifPresent(tuple -> {
-                    System.out.printf("first missing pair: %s -> %s%n", tuple.getFirst().name(), tuple.getSecond());
-                    System.out.printf("candidates: %s%n", tuple.getThird().stream().map(Person::name).collect(toList()));
-                });
+        System.out.println(nextContainer.candidates());
     }
 
     private void configure() {
