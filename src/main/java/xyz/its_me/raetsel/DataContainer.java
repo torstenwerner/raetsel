@@ -3,6 +3,7 @@ package xyz.its_me.raetsel;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 class DataContainer {
@@ -36,6 +37,10 @@ class DataContainer {
         System.out.printf("missing relation count: %d%n%n", countNullRelations());
     }
 
+    void printFirstRelations() {
+        printRelations(data.get(Category.values()[0]));
+    }
+
     private void printRelations(List<Person> personList) {
         personList.stream().map(Person::format).forEach(System.out::println);
         System.out.println();
@@ -65,7 +70,7 @@ class DataContainer {
                 .sum();
     }
 
-    List<CandidateRelation> candidates() {
+    private List<CandidateRelation> candidates() {
         return Arrays.stream(Category.values())
                 .flatMap(leftCategory ->
                         Arrays.stream(Category.values())
@@ -90,7 +95,7 @@ class DataContainer {
                 .collect(toList());
     }
 
-    DataContainer tryCandidate(CandidateRelation candidateRelation) {
+    private DataContainer tryCandidate(CandidateRelation candidateRelation) {
         System.out.printf("trying candidate: %s%n", candidateRelation);
 
         final DataContainer nextContainer = deepCopy();
@@ -104,5 +109,17 @@ class DataContainer {
             return null;
         }
         return nextContainer;
+    }
+
+    List<DataContainer> iterate() {
+        final List<CandidateRelation> candidateRelations = candidates();
+        if (candidateRelations.isEmpty()) {
+            return singletonList(this);
+        }
+        return candidateRelations.stream()
+                .map(this::tryCandidate)
+                .filter(Objects::nonNull)
+                .flatMap(dataContainer -> dataContainer.iterate().stream())
+                .collect(toList());
     }
 }

@@ -5,7 +5,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static xyz.its_me.raetsel.Category.*;
 
@@ -15,10 +14,9 @@ public class Solver implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         configure();
         final DataContainer firstContainer = new DataContainer();
-        final List<CandidateRelation> candidates = firstContainer.candidates();
-        final List<DataContainer> nextContainers = candidates.stream()
-                .map(firstContainer::tryCandidate)
-                .collect(Collectors.toList());
+        final List<DataContainer> results = firstContainer.iterate();
+        results.forEach(DataContainer::printFirstRelations);
+        System.out.printf("solution count: %d%n", results.size());
     }
 
     private void configure() {
