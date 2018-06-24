@@ -37,5 +37,6 @@ public class Solver implements ApplicationRunner {
         word.set(math);
         abap.set(vw);
         utility.set(vw);
+        phy.set(germany);
     }
 }

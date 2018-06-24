@@ -49,6 +49,7 @@ class Category {
     static final Category Sector = new Category("Sector");
     static final Category Status = new Category("Status");
     static final Category Field = new Category("Field");
+    static final Category Country = new Category("Country");
 
     static final Person ppt = Tool.newPerson("ppt");
     static final Person oo = Tool.newPerson("oo");
@@ -79,4 +80,10 @@ class Category {
     final static Person bw = Field.newPerson("bw");
     final static Person inf = Field.newPerson("inf");
     final static Person math = Field.newPerson("math");
+
+    final static Person france = Country.newPerson("france");
+    final static Person germany = Country.newPerson("germany");
+    final static Person poland = Country.newPerson("poland");
+    final static Person russia = Country.newPerson("russia");
+    final static Person china = Country.newPerson("china");
 }
