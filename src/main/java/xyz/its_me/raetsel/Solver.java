@@ -21,7 +21,10 @@ public class Solver implements ApplicationRunner {
         } while (changes > 0);
 
         nextContainer.firstMissingCondition()
-                .ifPresent(pair -> System.out.printf("first missing pair: %s%n", pair));
+                .ifPresent(pair -> {
+                    System.out.printf("first missing pair: %s%n", pair);
+                    System.out.printf("candidates: %s%n", nextContainer.candidates(pair));
+                });
     }
 
     private void configure() {

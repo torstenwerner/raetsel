@@ -65,4 +65,11 @@ class DataContainer {
                 .map(tuple -> new Pair<>(tuple.getThird(), tuple.getSecond()))
                 .findFirst();
     }
+
+    List<Person> candidates(Pair<Person, Category> pair) {
+        final Category firstCategory = pair.getFirst().getCategory();
+        return data.get(pair.getSecond()).stream()
+                .filter(person -> person.get(firstCategory) == null)
+                .collect(toList());
+    }
 }
