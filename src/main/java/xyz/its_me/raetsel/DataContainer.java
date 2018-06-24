@@ -94,13 +94,10 @@ class DataContainer {
     private DataContainer tryCandidate(CandidateRelation candidateRelation) {
         //System.out.printf("trying candidate: %s%n", candidateRelation);
 
-        final DataContainer nextContainer;
-        final Person sourcePerson;
-        final Person targetPerson;
         final Map<Person, Person> copyCache = new HashMap<>(dataSize());
-        nextContainer = deepCopy(copyCache);
-        sourcePerson = copyCache.get(candidateRelation.getSourcePerson());
-        targetPerson = copyCache.get(candidateRelation.getTargetPerson());
+        final DataContainer nextContainer = deepCopy(copyCache);
+        final Person sourcePerson = copyCache.get(candidateRelation.getSourcePerson());
+        final Person targetPerson = copyCache.get(candidateRelation.getTargetPerson());
         sourcePerson.set(targetPerson);
         try {
             nextContainer.mergeRecursively();
