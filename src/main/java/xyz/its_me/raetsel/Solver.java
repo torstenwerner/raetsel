@@ -1,19 +1,13 @@
 package xyz.its_me.raetsel;
 
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
 import static xyz.its_me.raetsel.Category.*;
 
-@Component
-public class Solver implements ApplicationRunner {
-    @Override
-    public void run(ApplicationArguments args) {
+class Solver {
+    void run() {
         configure();
         final DataContainer firstContainer = new DataContainer();
         final Instant start = Instant.now();
