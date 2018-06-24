@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DefaultPerson implements Person {
-    private List<Person> list = Arrays.asList(new Person[Category.getList().size()]);
+    private List<Person> relatedPersonByCategory = Arrays.asList(new Person[Category.getList().size()]);
 
     private final Category category;
     private final String name;
@@ -42,7 +42,7 @@ public class DefaultPerson implements Person {
         if (this.category == category) {
             return this;
         }
-        return list.get(category.getOrdinal());
+        return relatedPersonByCategory.get(category.getOrdinal());
     }
 
     @Override
@@ -51,7 +51,7 @@ public class DefaultPerson implements Person {
         if (this.category == person.getCategory()) {
             throw new AssertionError("cannot set this");
         }
-        list.set(person.getCategory().getOrdinal(), person);
+        relatedPersonByCategory.set(person.getCategory().getOrdinal(), person);
     }
 
     @Override

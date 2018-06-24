@@ -32,12 +32,12 @@ class DataContainer {
     }
 
     private void printRelations() {
-        data.stream().map(Category::persons).forEach(this::printRelations);
+        data.stream().map(Category::getPeople).forEach(this::printRelations);
         System.out.printf("missing relation count: %d%n%n", countNullRelations());
     }
 
     void printFirstRelations() {
-        printRelations(data.get(0).persons());
+        printRelations(data.get(0).getPeople());
     }
 
     private void printRelations(List<Person> personList) {
@@ -47,7 +47,7 @@ class DataContainer {
 
     private long countNullRelations() {
         return data.stream()
-                .map(Category::persons)
+                .map(Category::getPeople)
                 .flatMap(List::stream)
                 .mapToLong(Person::countNullRelations)
                 .sum();
@@ -65,7 +65,7 @@ class DataContainer {
 
     private int merge() {
         return data.stream()
-                .map(Category::persons)
+                .map(Category::getPeople)
                 .flatMap(List::stream)
                 .mapToInt(Person::mergeRelations)
                 .sum();
@@ -78,7 +78,7 @@ class DataContainer {
                                 .filter(rightCategory -> leftCategory != rightCategory)
                                 .map(rightCategory -> new Pair<>(leftCategory, rightCategory)))
                 .flatMap(pair ->
-                        data.get(pair.getFirst().getOrdinal()).persons().stream()
+                        data.get(pair.getFirst().getOrdinal()).getPeople().stream()
                                 .map(person -> new Tuple<>(pair.getFirst(), pair.getSecond(), person)))
                 .filter(tuple -> tuple.getThird().get(tuple.getSecond()) == null)
                 .findFirst()
@@ -91,7 +91,7 @@ class DataContainer {
 
     private List<Person> candidates(Person person, Category category) {
         final Category firstCategory = person.getCategory();
-        return data.get(category.getOrdinal()).persons().stream()
+        return data.get(category.getOrdinal()).getPeople().stream()
                 .filter(otherPerson -> otherPerson.get(firstCategory) == null)
                 .collect(toList());
     }
@@ -114,7 +114,7 @@ class DataContainer {
     }
 
     private int dataSize() {
-        return data.size() * data.get(0).persons().size();
+        return data.size() * data.get(0).getPeople().size();
     }
 
     private DataContainer deepCopy(Map<Person, Person> copyCache) {
@@ -126,7 +126,7 @@ class DataContainer {
 
     private Category deepCopy(Category category, Map<Person, Person> copyCache) {
         final Category categoryCopy = new Category(category);
-        categoryCopy.persons().addAll(category.persons().stream()
+        categoryCopy.getPeople().addAll(category.getPeople().stream()
                 .map(person -> DefaultPerson.copy(person, copyCache))
                 .collect(toList()));
         return categoryCopy;

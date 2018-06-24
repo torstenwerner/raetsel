@@ -3,13 +3,13 @@ package xyz.its_me.raetsel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category {
+class Category {
     private final int ordinal;
     private final String name;
 
     private final static List<Category> list = new ArrayList<>();
 
-    private final List<Person> personList = new ArrayList<>();
+    private final List<Person> people = new ArrayList<>();
 
     private Category(int ordinal, String name) {
         this.ordinal = ordinal;
@@ -28,7 +28,7 @@ public class Category {
 
     private Person newPerson(String name) {
         final DefaultPerson person = new DefaultPerson(this, name);
-        personList.add(person);
+        people.add(person);
         return person;
     }
 
@@ -36,8 +36,8 @@ public class Category {
         return ordinal;
     }
 
-    List<Person> persons() {
-        return personList;
+    List<Person> getPeople() {
+        return people;
     }
 
     static List<Category> getList() {
