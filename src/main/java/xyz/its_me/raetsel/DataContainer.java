@@ -1,6 +1,9 @@
 package xyz.its_me.raetsel;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 import java.util.stream.Stream;
@@ -9,7 +12,7 @@ import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 class DataContainer {
-    private final Map<Category, List<Person>> data;
+    private final List<Category> data;
 
     private final static ExecutorService executorService = createExecutorService();
 
@@ -19,22 +22,22 @@ class DataContainer {
                 new SynchronousQueue<>(), new CallerRunsPolicy());
     }
 
-    private DataContainer(Map<Category, List<Person>> data) {
+    private DataContainer(List<Category> data) {
         this.data = data;
     }
 
     DataContainer() {
-        this(Category.toMap());
+        this(Category.getList());
         mergeRecursively();
     }
 
     private void printRelations() {
-        data.values().forEach(this::printRelations);
+        data.stream().map(Category::persons).forEach(this::printRelations);
         System.out.printf("missing relation count: %d%n%n", countNullRelations());
     }
 
     void printFirstRelations() {
-        printRelations(data.get(Category.values()[0]));
+        printRelations(data.get(0).persons());
     }
 
     private void printRelations(List<Person> personList) {
@@ -43,7 +46,8 @@ class DataContainer {
     }
 
     private long countNullRelations() {
-        return data.values().stream()
+        return data.stream()
+                .map(Category::persons)
                 .flatMap(List::stream)
                 .mapToLong(Person::countNullRelations)
                 .sum();
@@ -60,20 +64,21 @@ class DataContainer {
     }
 
     private int merge() {
-        return data.values().stream()
+        return data.stream()
+                .map(Category::persons)
                 .flatMap(List::stream)
                 .mapToInt(Person::mergeRelations)
                 .sum();
     }
 
     private List<CandidateRelation> candidates() {
-        return Arrays.stream(Category.values())
+        return Category.getList().stream()
                 .flatMap(leftCategory ->
-                        Arrays.stream(Category.values())
+                        Category.getList().stream()
                                 .filter(rightCategory -> leftCategory != rightCategory)
                                 .map(rightCategory -> new Pair<>(leftCategory, rightCategory)))
                 .flatMap(pair ->
-                        data.get(pair.getFirst()).stream()
+                        data.get(pair.getFirst().getOrdinal()).persons().stream()
                                 .map(person -> new Tuple<>(pair.getFirst(), pair.getSecond(), person)))
                 .filter(tuple -> tuple.getThird().get(tuple.getSecond()) == null)
                 .findFirst()
@@ -86,7 +91,7 @@ class DataContainer {
 
     private List<Person> candidates(Person person, Category category) {
         final Category firstCategory = person.getCategory();
-        return data.get(category).stream()
+        return data.get(category.getOrdinal()).persons().stream()
                 .filter(otherPerson -> otherPerson.get(firstCategory) == null)
                 .collect(toList());
     }
@@ -109,19 +114,22 @@ class DataContainer {
     }
 
     private int dataSize() {
-        return data.size() * data.get(Category.values()[0]).size();
+        return data.size() * data.get(0).persons().size();
     }
 
     private DataContainer deepCopy(Map<Person, Person> copyCache) {
-        final Map<Category, List<Person>> targetMap = new EnumMap<>(Category.class);
-        data.forEach((key, value) -> targetMap.put(key, deepCopy(value, copyCache)));
+        final List<Category> targetMap = data.stream()
+                .map((category) -> deepCopy(category, copyCache))
+                .collect(toList());
         return new DataContainer(targetMap);
     }
 
-    private List<Person> deepCopy(List<Person> personList, Map<Person, Person> copyCache) {
-        return personList.stream()
+    private Category deepCopy(Category category, Map<Person, Person> copyCache) {
+        final Category categoryCopy = new Category(category);
+        categoryCopy.persons().addAll(category.persons().stream()
                 .map(person -> DefaultPerson.copy(person, copyCache))
-                .collect(toList());
+                .collect(toList()));
+        return categoryCopy;
     }
 
     List<DataContainer> iterate() {

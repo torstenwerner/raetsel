@@ -1,12 +1,12 @@
 package xyz.its_me.raetsel;
 
 import java.util.Arrays;
-import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class DefaultPerson implements Person {
-    private Map<Category, Person> map = new EnumMap<>(Category.class);
+    private List<Person> list = Arrays.asList(new Person[Category.getList().size()]);
 
     private final Category category;
     private final String name;
@@ -14,6 +14,7 @@ public class DefaultPerson implements Person {
     DefaultPerson(Category category, String name) {
         this.category = category;
         this.name = name;
+
     }
 
     static Person copy(Person person, Map<Person, Person> copyCache) {
@@ -22,7 +23,7 @@ public class DefaultPerson implements Person {
         }
         final Person personCopy = new DefaultPerson(person.getCategory(), person.name());
         copyCache.put(person, personCopy);
-        Arrays.stream(Category.values())
+        Category.getList().stream()
                 .filter(category -> category != person.getCategory())
                 .map(person::get)
                 .filter(Objects::nonNull)
@@ -41,7 +42,7 @@ public class DefaultPerson implements Person {
         if (this.category == category) {
             return this;
         }
-        return map.get(category);
+        return list.get(category.getOrdinal());
     }
 
     @Override
@@ -50,7 +51,7 @@ public class DefaultPerson implements Person {
         if (this.category == person.getCategory()) {
             throw new AssertionError("cannot set this");
         }
-        map.put(person.getCategory(), person);
+        list.set(person.getCategory().getOrdinal(), person);
     }
 
     @Override
@@ -61,7 +62,6 @@ public class DefaultPerson implements Person {
     @Override
     public String toString() {
         return "DefaultPerson{" +
-                "map=" + map.keySet() +
                 ", category=" + category +
                 ", name='" + name + '\'' +
                 '}';

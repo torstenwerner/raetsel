@@ -1,6 +1,5 @@
 package xyz.its_me.raetsel;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -18,14 +17,14 @@ public interface Person {
     }
 
     default long countNullRelations() {
-        return Arrays.stream(Category.values())
+        return Category.getList().stream()
                 .map(this::get)
                 .filter(Objects::isNull)
                 .count();
     }
 
     default String format() {
-        return Arrays.stream(Category.values())
+        return Category.getList().stream()
                 .map(this::get)
                 .map(Person::nullSafeName)
                 .map(name -> String.format("%-10s", name))
@@ -53,13 +52,13 @@ public interface Person {
         if (otherPerson == null) {
             return 0;
         }
-        return Arrays.stream(Category.values())
+        return Category.getList().stream()
                 .mapToInt(category -> mergeByCategory(category, otherPerson))
                 .sum();
     }
 
     default int mergeRelations() {
-        return Arrays.stream(Category.values())
+        return Category.getList().stream()
                 .map(this::get)
                 .mapToInt(this::merge)
                 .sum();

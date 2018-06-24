@@ -1,17 +1,30 @@
 package xyz.its_me.raetsel;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
-public enum Category {
-    Tool,
-    Language,
-    Sector,
-    Status,
-    Field;
+public class Category {
+    private final int ordinal;
+    private final String name;
+
+    private final static List<Category> list = new ArrayList<>();
 
     private final List<Person> personList = new ArrayList<>();
+
+    private Category(int ordinal, String name) {
+        this.ordinal = ordinal;
+        this.name = name;
+    }
+
+    Category(Category category) {
+        this.ordinal = category.ordinal;
+        this.name = category.name;
+    }
+
+    private Category(String name) {
+        this(list.size(), name);
+        list.add(this);
+    }
 
     private Person newPerson(String name) {
         final DefaultPerson person = new DefaultPerson(this, name);
@@ -19,23 +32,23 @@ public enum Category {
         return person;
     }
 
+    int getOrdinal() {
+        return ordinal;
+    }
+
     List<Person> persons() {
         return personList;
     }
 
-    static Map<Category, List<Person>> toMap() {
-        return toMap(Category::persons);
+    static List<Category> getList() {
+        return list;
     }
 
-    private static Map<Category, List<Person>> toMap(Function<Category, List<Person>> personListSupplier) {
-        return Arrays.stream(values()).collect(Collectors.toMap(
-                Function.identity(),
-                personListSupplier,
-                (category, list) -> {
-                    throw new IllegalStateException(String.format("Duplicate category %s", category));
-                },
-                () -> new EnumMap<>(Category.class)));
-    }
+    static final Category Tool = new Category("Tool");
+    static final Category Language = new Category("Language");
+    static final Category Sector = new Category("Sector");
+    static final Category Status = new Category("Status");
+    static final Category Field = new Category("Field");
 
     static final Person ppt = Tool.newPerson("ppt");
     static final Person oo = Tool.newPerson("oo");
