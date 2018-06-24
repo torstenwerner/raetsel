@@ -5,14 +5,14 @@ import lombok.Value;
 @Value
 public class CandidateRelation {
     Person sourcePerson;
-    Category targetCategory;
     Person targetPerson;
 
     @Override
     public String toString() {
         return "CandidateRelation{" +
-                "sourcePerson=" + sourcePerson.name() +
-                ", targetCategory=" + targetCategory +
+                "sourceCategory=" + sourcePerson.getCategory() +
+                ", sourcePerson=" + sourcePerson.name() +
+                ", targetCategory=" + targetPerson.getCategory() +
                 ", targetPerson=" + targetPerson.name() +
                 '}';
     }

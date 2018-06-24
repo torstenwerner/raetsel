@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.toList;
 
 class DataContainer {
     private final Map<Category, List<Person>> data;
+    private Map<Person, Person> copyCache;
 
     private DataContainer(Map<Category, List<Person>> data) {
         this.data = data;
@@ -14,10 +15,11 @@ class DataContainer {
 
     DataContainer() {
         this(Category.toMap());
+        mergeRecursively();
     }
 
-    DataContainer deepCopy() {
-        final Map<Person, Person> copyCache = new HashMap<>(data.size() * Category.values().length);
+    private DataContainer deepCopy() {
+        copyCache = new HashMap<>(data.size() * Category.values().length);
         final Map<Category, List<Person>> targetMap = new EnumMap<>(Category.class);
         data.forEach((key, value) -> targetMap.put(key, deepCopy(value, copyCache)));
         return new DataContainer(targetMap);
@@ -29,7 +31,7 @@ class DataContainer {
                 .collect(toList());
     }
 
-    void printRelations() {
+    private void printRelations() {
         data.values().forEach(this::printRelations);
         System.out.printf("missing relation count: %d%n%n", countNullRelations());
     }
@@ -46,7 +48,17 @@ class DataContainer {
                 .sum();
     }
 
-    int merge() {
+    private void mergeRecursively() {
+        int changes;
+        do {
+            printRelations();
+            changes = merge();
+            System.out.printf("changes: %d%n", changes);
+        } while (changes > 0);
+
+    }
+
+    private int merge() {
         return data.values().stream()
                 .flatMap(List::stream)
                 .mapToInt(Person::mergeRelations)
@@ -66,7 +78,7 @@ class DataContainer {
                 .findFirst()
                 .map(tuple ->
                         candidates(tuple.getThird(), tuple.getSecond()).stream()
-                                .map(person -> new CandidateRelation(tuple.getThird(), tuple.getSecond(), person)))
+                                .map(person -> new CandidateRelation(tuple.getThird(), person)))
                 .orElse(Stream.empty())
                 .collect(toList());
     }
@@ -76,5 +88,14 @@ class DataContainer {
         return data.get(category).stream()
                 .filter(otherPerson -> otherPerson.get(firstCategory) == null)
                 .collect(toList());
+    }
+
+    DataContainer tryCandidate(CandidateRelation candidateRelation) {
+        final DataContainer nextContainer = deepCopy();
+        final Person sourcePerson = copyCache.get(candidateRelation.getSourcePerson());
+        final Person targetPerson = copyCache.get(candidateRelation.getTargetPerson());
+        sourcePerson.set(targetPerson);
+        nextContainer.mergeRecursively();
+        return nextContainer;
     }
 }
