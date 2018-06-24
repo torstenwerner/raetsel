@@ -56,7 +56,7 @@ class DataContainer {
     private void mergeRecursively() {
         int changes;
         do {
-            printRelations();
+            //printRelations();
             changes = merge();
             System.out.printf("changes: %d%n", changes);
         } while (changes > 0);
