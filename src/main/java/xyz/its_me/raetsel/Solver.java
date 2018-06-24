@@ -34,8 +34,8 @@ public class Solver implements ApplicationRunner {
         auto.set(ass);
         aris.set(partner);
         kopf.set(junior);
-        //word.set(math);
-        //abap.set(vw);
-        //utility.set(vw);
+        word.set(math);
+        abap.set(vw);
+        utility.set(vw);
     }
 }

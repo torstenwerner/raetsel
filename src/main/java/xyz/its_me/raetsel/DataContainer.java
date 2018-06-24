@@ -1,10 +1,8 @@
 package xyz.its_me.raetsel;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
+import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
@@ -13,7 +11,13 @@ import static java.util.stream.Collectors.toList;
 class DataContainer {
     private final Map<Category, List<Person>> data;
 
-    private final static ExecutorService executorService = Executors.newCachedThreadPool();
+    private final static ExecutorService executorService = createExecutorService();
+
+    private static ExecutorService createExecutorService() {
+        final int cpuCount = Runtime.getRuntime().availableProcessors();
+        return new ThreadPoolExecutor(0, cpuCount + 1, 1, TimeUnit.MINUTES,
+                new SynchronousQueue<>(), new CallerRunsPolicy());
+    }
 
     private DataContainer(Map<Category, List<Person>> data) {
         this.data = data;
