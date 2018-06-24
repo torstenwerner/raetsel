@@ -66,4 +66,12 @@ public class DefaultPerson implements Person {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    @Override
+    public String shortString() {
+        return "DefaultPerson{" +
+                "category=" + category +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

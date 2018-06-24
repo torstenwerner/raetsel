@@ -44,7 +44,7 @@ public interface Person {
             return 1;
         }
         if (thisValue != otherValue) {
-            throw new AssertionError("conflict");
+            throw new ConflictException(this, thisValue, otherPerson, otherValue);
         }
         return 0;
     }
@@ -64,4 +64,6 @@ public interface Person {
                 .mapToInt(this::merge)
                 .sum();
     }
+
+    String shortString();
 }

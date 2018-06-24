@@ -91,11 +91,18 @@ class DataContainer {
     }
 
     DataContainer tryCandidate(CandidateRelation candidateRelation) {
+        System.out.printf("trying candidate: %s%n", candidateRelation);
+
         final DataContainer nextContainer = deepCopy();
         final Person sourcePerson = copyCache.get(candidateRelation.getSourcePerson());
         final Person targetPerson = copyCache.get(candidateRelation.getTargetPerson());
         sourcePerson.set(targetPerson);
-        nextContainer.mergeRecursively();
+        try {
+            nextContainer.mergeRecursively();
+        } catch (ConflictException e) {
+            System.out.printf("conflict: %s%n", e);
+            return null;
+        }
         return nextContainer;
     }
 }
