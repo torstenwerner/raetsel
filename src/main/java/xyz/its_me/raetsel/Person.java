@@ -48,19 +48,14 @@ public interface Person {
         return 0;
     }
 
-    default int merge(Person otherPerson) {
-        if (otherPerson == null) {
-            return 0;
-        }
-        return Category.getList().stream()
-                .mapToInt(category -> mergeByCategory(category, otherPerson))
-                .sum();
-    }
-
     default int mergeRelations() {
         return Category.getList().stream()
                 .map(this::get)
-                .mapToInt(this::merge)
+                .filter(Objects::nonNull)
+                .mapToInt(otherPerson ->
+                        Category.getList().stream()
+                                .mapToInt(category -> mergeByCategory(category, otherPerson))
+                                .sum())
                 .sum();
     }
 
