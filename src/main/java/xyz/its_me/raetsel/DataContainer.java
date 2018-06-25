@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.*;
-import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
@@ -13,14 +11,6 @@ import static java.util.stream.Collectors.toList;
 
 class DataContainer {
     private final List<Category> data;
-
-    private final static ExecutorService executorService = createExecutorService();
-
-    private static ExecutorService createExecutorService() {
-        final int cpuCount = Runtime.getRuntime().availableProcessors();
-        return new ThreadPoolExecutor(0, cpuCount + 1, 1, TimeUnit.MINUTES,
-                new SynchronousQueue<>(), new CallerRunsPolicy());
-    }
 
     private DataContainer(List<Category> data) {
         this.data = data;
@@ -137,23 +127,12 @@ class DataContainer {
         if (candidateRelations.isEmpty()) {
             return singletonList(this);
         }
-        final List<Future<List<DataContainer>>> futures = candidateRelations.stream()
+        return candidateRelations.stream()
+                .parallel()
                 .map(this::tryCandidate)
                 .filter(Objects::nonNull)
-                .map(dataContainer -> executorService.submit(dataContainer::iterate))
+                .map(DataContainer::iterate)
+                .flatMap(List::stream)
                 .collect(toList());
-        return futures.stream()
-                .flatMap(listFuture -> {
-                    try {
-                        return listFuture.get().stream();
-                    } catch (InterruptedException | ExecutionException e) {
-                        throw new RuntimeException("future failed", e);
-                    }
-                })
-                .collect(toList());
-    }
-
-    static void shutdown() {
-        executorService.shutdown();
     }
 }
